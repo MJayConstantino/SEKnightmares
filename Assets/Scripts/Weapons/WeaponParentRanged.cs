@@ -7,10 +7,7 @@ public class WeaponParentRanged : MonoBehaviour
     public SpriteRenderer characterRenderer, weaponRenderer;
     public GameObject firepoint;
     public Vector2 PointerPosition { get; set; }
-
-    
-
-    public float rotationSpeed = 1000f; // Adjust the speed as needed
+    public float rotationSpeed = 1000f;
 
 
     private void Update()
@@ -24,12 +21,12 @@ public class WeaponParentRanged : MonoBehaviour
         if (direction.x < 0)
         {
             scale.y = -1;
-            RotateFirepoint(90f); // Flip firepoint
+            RotateFirepoint(90f);
         }
         else if (direction.x > 0)
         {
             scale.y = 1;
-            RotateFirepoint(-90f); // Reset firepoint
+            RotateFirepoint(-90f);
         }
         transform.localScale = scale;
 

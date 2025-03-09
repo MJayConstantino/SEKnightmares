@@ -7,13 +7,12 @@ public class MainMenu : MonoBehaviour
 {
     public Animator transition;
     public float transitionTime = 1f;
-
     public AudioSource start;
 
     public void StartGame()
     {
         start.Play();
-        StartCoroutine(LoadSceneWithTransition("TutorialDirections")); // Replace "YourLevelSceneName" with the actual scene name
+        StartCoroutine(LoadSceneWithTransition("TutorialDirections"));
     }
 
     IEnumerator LoadSceneWithTransition(string sceneName)

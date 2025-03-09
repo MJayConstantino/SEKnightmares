@@ -5,18 +5,15 @@ using UnityEngine;
 
 public class SpawnWave : MonoBehaviour
 {
-    public GateController gateController; // Reference to the gate controller script
+    public GateController gateController;
     public WaveSpawner waveSpawner;
     public List<UnityEngine.Rendering.Universal.Light2D> lightsToTurnOff;
     
-    public List<UnityEngine.Rendering.Universal.Light2D> lightsToTurnOn; // List of Light2D components to be turned off
-    private Collider2D triggerCollider; // Reference to the trigger collider
+    public List<UnityEngine.Rendering.Universal.Light2D> lightsToTurnOn;
+    private Collider2D triggerCollider;
 
-    // Start is called before the first frame update
     void Start()
     {
-
-        // Get the reference to the Collider component
         triggerCollider = GetComponent<Collider2D>();
         foreach (UnityEngine.Rendering.Universal.Light2D light in lightsToTurnOn)
         {
@@ -25,22 +22,15 @@ public class SpawnWave : MonoBehaviour
 
     }
 
-    // OnTriggerEnter is called when the Collider other enters the trigger
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the entering collider is the player
+
         if (other.CompareTag("Player"))
         {
-            // Enable the gate controller
             gateController.OpenGate();
-            
-            // Set canSpawn to true in the WaveSpawner script
             waveSpawner.canSpawn = true;
-            
-            // Disable the trigger collider
             triggerCollider.enabled = false;
 
-            // Turn off the lights
             foreach (UnityEngine.Rendering.Universal.Light2D light in lightsToTurnOff)
             {
                 light.enabled = false;
@@ -48,7 +38,7 @@ public class SpawnWave : MonoBehaviour
 
             foreach (UnityEngine.Rendering.Universal.Light2D light in lightsToTurnOn)
             {
-                light.enabled = true; // Toggle the state of the light
+                light.enabled = true;
             }
         }
     }

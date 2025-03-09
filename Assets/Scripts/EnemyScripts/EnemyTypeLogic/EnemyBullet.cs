@@ -20,7 +20,6 @@ public class EnemyBullet : MonoBehaviour
     
         if (collision.gameObject.CompareTag("Player"))
         {
-            // If collided with the player, deal damage
             PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
             playerHealth.TakeDamage(damage);
         }
@@ -31,9 +30,7 @@ public class EnemyBullet : MonoBehaviour
 
     private IEnumerator DestroyAfterDelay(float delay)
     {
-    // Wait for the specified delay
         yield return new WaitForSeconds(delay);
-    // Destroy the game object after waiting
         Destroy(gameObject);
     }
 
@@ -41,7 +38,6 @@ public class EnemyBullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            // Bullet exits collision with an enemy, revert to the original sorting order
             spriteRenderer.sortingOrder = 0;
         }
     }

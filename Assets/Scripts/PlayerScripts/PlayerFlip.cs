@@ -11,16 +11,13 @@ public class PlayerFlip : MonoBehaviour
     private void Update()
     {
         Vector2 mousePos = pointerPosition.action.ReadValue<Vector2>();
-
-
-        // Flip the player based on the mouse direction
         if (mousePos.x < 1000)
         {
             characterRenderer.flipX = true;
         }
         else if (mousePos.x > 1000)
         {
-            characterRenderer.flipX = false; // Reset scale to normal
+            characterRenderer.flipX = false;
         }
     }
 }

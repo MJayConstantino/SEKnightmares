@@ -9,23 +9,16 @@ public class ChemLogic : MonoBehaviour
     [SerializeField] float dashDuration = 0.5f;
     [SerializeField] float dashCooldown;
     [SerializeField] AudioSource witchspawn, witchidle, witchdash, withchdie;
-
     Rigidbody2D rb;
     Transform target;
     Vector2 moveDirection;
     SpriteRenderer characterRenderer;
     EnemyHealthBar healthBar;
-
     public int damage = 5;
-
     private bool canDash = false;
-
     int expAmount = 1;
-
     public Dissolve dissolve;
-
     private bool canMove = false;
-
 
     private void Awake()
     {
@@ -39,17 +32,16 @@ public class ChemLogic : MonoBehaviour
     {
         health = maxHealth;
         FindPlayer();
-        StartCoroutine(EnableDashAfterAppearance()); // Start the coroutine to enable dash after appearance
+        StartCoroutine(EnableDashAfterAppearance());
     }
 
     private IEnumerator EnableDashAfterAppearance()
     {
-        dissolve.Appear(); // Start the appearance animation
+        dissolve.Appear();
         yield return new WaitForSeconds(0.75f);
         canMove = true;
         yield return new WaitForSeconds(3f);
         canDash = true;
-         // Enable dash after appearance animation is complete
     }
 
     private void FindPlayer()
@@ -62,14 +54,10 @@ public class ChemLogic : MonoBehaviour
 
     private void Update()
     {
-        if (target && canMove) // Check if not dead before updating
+        if (target && canMove)
         {
             Vector3 direction = (target.position - transform.position).normalized;
-
-            // Update the moveDirection
             moveDirection = direction;
-
-            // Flip the sprite based on the movement direction
             if (moveDirection.x < 0)
             {
                 characterRenderer.flipX = false;
@@ -78,8 +66,6 @@ public class ChemLogic : MonoBehaviour
             {
                 characterRenderer.flipX = true;
             }
-
-            // Check for dash input
             if (canDash)
             {
                 StartCoroutine(Dash());
@@ -90,7 +76,6 @@ public class ChemLogic : MonoBehaviour
             FindPlayer();
         }
     }
-
 
     private void FixedUpdate()
     {
@@ -103,22 +88,12 @@ public class ChemLogic : MonoBehaviour
     private IEnumerator Dash()
     {
         canDash = false;
-
-        // Store the original speed
         float originalSpeed = moveSpeed;
-
-        // Apply dash speed
         moveSpeed = dashSpeed;
         witchdash.Play();
-        // Wait for the dash duration
         yield return new WaitForSeconds(dashDuration);
-
-        // Reset speed after dash
         moveSpeed = originalSpeed;
-
-        // Wait for the dash cooldown
         yield return new WaitForSeconds(dashCooldown);
-
         canDash = true;
     }
 

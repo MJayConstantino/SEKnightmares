@@ -9,24 +9,16 @@ public class CalculusLogic : MonoBehaviour
     [SerializeField] Transform bulletSpawnPoint;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float timeBetweenShots = 2f;
-
     [SerializeField] AudioSource robotspawn, robothurt, robotfire, robotdie;
-
     Rigidbody2D rb;
     Transform target;
     Vector2 moveDirection;
     EnemyHealthBar healthBar;
-
     public SpawnBullet spawnBullet;
     SpriteRenderer characterRenderer;
-    
     public Transform firePoint;
-
     int expAmount = 1;
-
     public Dissolve dissolve;
-
-    //private bool canShoot = true;
 
     private void Awake()
     {
@@ -61,29 +53,22 @@ public class CalculusLogic : MonoBehaviour
     {
         if (target)
         {
-            // Calculate direction from firePoint to player
             Vector3 direction = (target.position - firePoint.position).normalized;
 
-            // Calculate angle and set rotation for the firePoint
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             firePoint.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
-
-            // Update the moveDirection (optional if you want the enemy to move towards the player)
             moveDirection = direction;
-
-            // Flip the sprite based on the movement direction
             if (moveDirection.x < 0)
             {
-                characterRenderer.flipX = false; // Flip the sprite when moving left
+                characterRenderer.flipX = false;
             }
             else if (moveDirection.x > 0)
             {
-                characterRenderer.flipX = true; // Reset scale to normal when moving right
+                characterRenderer.flipX = true;
             }
         }
         else
         {
-            // Try to find the player if the target is null (e.g., if player is destroyed)
             FindPlayer();
         }
     }

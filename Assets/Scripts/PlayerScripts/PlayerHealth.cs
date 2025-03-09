@@ -44,28 +44,14 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator FlashRed()
     {
-        // Set the sprite color to red
         playerRenderer.color = Color.red;
-
-        // Wait for a short duration
         yield return new WaitForSeconds(0.2f);
-
-        // Reset the sprite color to its original color
         playerRenderer.color = Color.white;
     }
 
     IEnumerator PlayerDeath()
     {
-        // Set the "IsDead" parameter to trigger the death animation
-        //if (transition != null)
-        //{
-            //transition.SetBool("IsDead", true);
-        //}
-
-        // Wait for the animation to complete (you can adjust the time based on your animation)
         yield return new WaitForSeconds(1);
-
-        // Load the GameOver scene
         SceneManager.LoadScene("GameOver");
     }
 
@@ -88,9 +74,5 @@ public class PlayerHealth : MonoBehaviour
 
         currentExperience = 0;
         maxExperience += 5;
-    }
-    void Update()
-    {
-        
     }
 }

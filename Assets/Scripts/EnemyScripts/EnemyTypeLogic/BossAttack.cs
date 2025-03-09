@@ -17,12 +17,10 @@ public class BossAttack : MonoBehaviour
     public Animator[] animators;
     public Animator[] gun2animators;
     public float fireForce = 25f;
-
-    private int currentPhase = 1; // Initial phase is 1
+    private int currentPhase = 1;
 
     void Start()
     {
-        // Start the attack routine
         StartCoroutine(AttackRoutine());
     }
 
@@ -40,7 +38,6 @@ public class BossAttack : MonoBehaviour
 
     public void SwitchToPhase(int phase)
     {
-        // Disable fire points of the current phase
         if (currentPhase == 1)
         {
             foreach (Transform firePoint in firstPhaseFirePoints)
@@ -56,10 +53,8 @@ public class BossAttack : MonoBehaviour
             }
         }
 
-        // Switch to the new phase
         currentPhase = phase;
 
-        // Enable fire points of the new phase
         if (currentPhase == 1)
         {
             foreach (Transform firePoint in firstPhaseFirePoints)
@@ -87,10 +82,6 @@ public class BossAttack : MonoBehaviour
         {
             gun2animator.SetBool("IsAttackingPhase2", true);
         }
-
-        Debug.Log("RAHHH!"); // Debugging statement
-
-        // Use fire points based on the current phase
         if (currentPhase == 1)
         {
             foreach (Transform firePoint in firstPhaseFirePoints)

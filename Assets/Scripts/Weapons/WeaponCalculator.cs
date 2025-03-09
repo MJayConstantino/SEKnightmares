@@ -8,11 +8,8 @@ public class WeaponCalculator : MonoBehaviour
     public Transform firePoint;
     public float fireForce = 1f;
 
-
     public void Fire()
     {
-        Debug.Log("Fire!"); // Debugging statement
-
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         if (bullet != null)
         {

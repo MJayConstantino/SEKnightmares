@@ -34,14 +34,9 @@ public class WaveSpawner : MonoBehaviour
 
     public List<UnityEngine.Rendering.Universal.Light2D> lightsToTurnOff;
 
-    //public Camera mainCamera;
-
-    //public Camera bossCamera;
 
     private void Start()
     {
-        //mainCamera.depth = 1;
-        //bossCamera.depth = 0;
         PlayInGameMusic();
     }
 
@@ -79,13 +74,6 @@ public class WaveSpawner : MonoBehaviour
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene("GameWon");
     }
-
-    void SpawnNextWave()
-    {
-        currentWaveNumber++;
-        canSpawn = true;
-    }
-
     void SpawnWave()
     {
         if (canSpawn && nextSpawnTime < Time.time && currentWave.noOfEnemies > 0)
@@ -109,12 +97,17 @@ public class WaveSpawner : MonoBehaviour
                     {
                         light.enabled = false;
                     }
-                    //mainCamera.depth = 0;
-                    //bossCamera.depth = 1;
                 }
             }
         }
     }
+    
+    void SpawnNextWave()
+    {
+        currentWaveNumber++;
+        canSpawn = true;
+    }
+
 
     void PlayBossMusic()
     {

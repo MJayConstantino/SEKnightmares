@@ -59786,6 +59786,7 @@ GameObject:
   - component: {fileID: 1460220625}
   - component: {fileID: 1460220626}
   - component: {fileID: 1460220627}
+  - component: {fileID: 1460220628}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -60641,6 +60642,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterRenderer: {fileID: 1460220626}
   pointerPosition: {fileID: 8306784451087540230, guid: 390149ff3137e614d8987ac36377acb8, type: 3}
+--- !u!114 &1460220628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460220609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf99f37e0a321fe4ba971f212d3fe789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRewindTime: 5
+  recordFrequency: 0.1
+  rewindCooldown: 10
+  rewindKey: 114
+  rewindSoundEffect: {fileID: 0}
+  useVisualEffect: 1
+  rewindColor: {r: 0, g: 0.8, b: 1, a: 0.8}
+  previewColor: {r: 0, g: 0.8, b: 1, a: 0.4}
+  showTrail: 1
+  trailColor: {r: 0, g: 0.7, b: 1, a: 0.5}
+  trailWidth: 0.1
+  trailSegments: 10
 --- !u!1 &1492520547
 GameObject:
   m_ObjectHideFlags: 0

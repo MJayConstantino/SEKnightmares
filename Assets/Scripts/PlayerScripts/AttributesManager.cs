@@ -16,10 +16,5 @@ public class AttributesManager : MonoBehaviour
         if (atm != null){
             atm.TakeDamage(attack);
         }
-
-
     }
-
-
-
 }

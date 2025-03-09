@@ -9,23 +9,16 @@ public class DiscreteMathLogic : MonoBehaviour
     [SerializeField] Transform bulletSpawnPoint;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float timeBetweenShots = 2f;
-
     Rigidbody2D rb;
     Transform target;
     Vector2 moveDirection;
     EnemyHealthBar healthBar;
-
     public SpawnBullet spawnBullet;
     [SerializeField] AudioSource dragonSpawn, dragonHurt, dragonDie, dragonAttack, dragonFly;
-
     int expAmount = 1;
     SpriteRenderer characterRenderer;
-
     public Transform firePoint;
-
     public Dissolve dissolve;
-
-    //private bool canShoot = true;
 
     private void Awake()
     {
@@ -60,29 +53,21 @@ public class DiscreteMathLogic : MonoBehaviour
     {
         if (target)
         {
-            // Calculate direction from firePoint to player
             Vector3 direction = (target.position - firePoint.position).normalized;
-
-            // Calculate angle and set rotation for the firePoint
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             firePoint.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
-
-            // Update the moveDirection (optional if you want the enemy to move towards the player)
             moveDirection = direction;
-
-            // Flip the sprite based on the movement direction
             if (moveDirection.x < 0)
             {
-                characterRenderer.flipX = true; // Flip the sprite when moving left
+                characterRenderer.flipX = true;
             }
             else if (moveDirection.x > 0)
             {
-                characterRenderer.flipX = false; // Reset scale to normal when moving right
+                characterRenderer.flipX = false;
             }
         }
         else
         {
-            // Try to find the player if the target is null (e.g., if player is destroyed)
             FindPlayer();
         }
     }
@@ -97,7 +82,6 @@ public class DiscreteMathLogic : MonoBehaviour
 
     private void DealDamageToPlayer(int amount)
     {
-        // Assuming you have a PlayerHealth script or a similar script for the player
         PlayerHealth playerHealth = target.GetComponent<PlayerHealth>();
         if (playerHealth != null)
         {
@@ -109,16 +93,11 @@ public class DiscreteMathLogic : MonoBehaviour
     {
         while (true)
         {
-            //if(canShoot)
-            //{
-                dragonAttack.Play();
-                yield return new WaitForSeconds(timeBetweenShots);
-                spawnBullet.Fire();
-            //}
+            dragonAttack.Play();
+            yield return new WaitForSeconds(timeBetweenShots);
+            spawnBullet.Fire();
         }
     }
-
-    
 
     public void TakeDamage(float damageAmount)
     {
@@ -129,17 +108,14 @@ public class DiscreteMathLogic : MonoBehaviour
         {
             dissolve.Vanish();
             dragonDie.Play();
-            //canShoot = false;
             StartCoroutine(DestroyAfterDelay(0.75f));
         }
     }
 
     private IEnumerator DestroyAfterDelay(float delay)
     {
-    // Wait for the specified delay
         yield return new WaitForSeconds(delay);
         ExperienceManager.Instance.AddExperience(expAmount);
-    // Destroy the game object after waiting
         Destroy(gameObject);
     }
 
