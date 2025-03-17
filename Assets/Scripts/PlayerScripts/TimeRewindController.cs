@@ -38,7 +38,9 @@ public class TimeRewindController : MonoBehaviour
     [SerializeField] private bool showTrail = true;
     [SerializeField] private Color trailColor = new Color(0, 0.7f, 1f, 0.5f);
     [SerializeField] private float trailWidth = 0.1f;
-    [SerializeField] private int trailSegments = 10;
+    [SerializeField] private int trailSegments = 10;            // Number of segments to display in the trail
+    [SerializeField] private float trailFadeWidth = 0.05f;      // Width at the end of the trail (for fading effect)
+    [SerializeField] private Color trailEndColor = new Color(0, 0.7f, 1f, 0.1f); // Color at the end of the trail
     
     // Components
     private PlayerMovement playerMovement;
@@ -138,16 +140,30 @@ public class TimeRewindController : MonoBehaviour
 
     private void CreateTrail()
     {
-        // Create a line renderer for the trail
+        // Create a line renderer for the trail with multiple segments
         trailRenderer = gameObject.AddComponent<LineRenderer>();
         trailRenderer.startWidth = trailWidth;
-        trailRenderer.endWidth = trailWidth;
-        trailRenderer.positionCount = 2; // Just two points: player and preview
+        trailRenderer.endWidth = trailFadeWidth;
+        trailRenderer.positionCount = trailSegments + 1; // +1 for the player's current position
         trailRenderer.material = new Material(Shader.Find("Sprites/Default"));
         trailRenderer.startColor = trailColor;
-        trailRenderer.endColor = trailColor;
+        trailRenderer.endColor = trailEndColor;
         trailRenderer.sortingLayerName = spriteRenderer.sortingLayerName;
         trailRenderer.sortingOrder = spriteRenderer.sortingOrder - 2; // Behind both the player and preview
+        
+        // Set up a gradient for the trail to fade out
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(trailColor, 0.0f), new GradientColorKey(trailEndColor, 1.0f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(trailColor.a, 0.0f), new GradientAlphaKey(trailEndColor.a, 1.0f) }
+        );
+        trailRenderer.colorGradient = gradient;
+        
+        // Initialize all points to the current position
+        for (int i = 0; i < trailRenderer.positionCount; i++)
+        {
+            trailRenderer.SetPosition(i, transform.position);
+        }
     }
 
     private void Update()
@@ -250,9 +266,79 @@ public class TimeRewindController : MonoBehaviour
 
     private void UpdateTrail()
     {
-        // Simple straight line between player and preview
+        // Set the first point to the player's current position
         trailRenderer.SetPosition(0, transform.position);
-        trailRenderer.SetPosition(1, previewObject.transform.position);
+        
+        // Get the ending position (preview position)
+        Vector2 endPosition = previewObject.transform.position;
+        
+        // Calculate evenly spaced points between the player and preview
+        int numPoints = trailSegments + 1; // Including player's position
+        
+        // Find appropriate snapshots for the trail
+        List<PlayerStateSnapshot> trailSnapshots = GetTrailSnapshots(numPoints);
+        
+        // Update trail positions based on the snapshots
+        for (int i = 0; i < numPoints; i++)
+        {
+            if (i < trailSnapshots.Count)
+            {
+                trailRenderer.SetPosition(i, trailSnapshots[i].Position);
+            }
+            else
+            {
+                // If we don't have enough snapshots, interpolate remaining points
+                float t = (float)i / (numPoints - 1);
+                Vector2 position = Vector2.Lerp(transform.position, endPosition, t);
+                trailRenderer.SetPosition(i, position);
+            }
+        }
+    }
+    
+    private List<PlayerStateSnapshot> GetTrailSnapshots(int numPoints)
+    {
+        List<PlayerStateSnapshot> snapshots = new List<PlayerStateSnapshot>();
+        
+        // Add the current position first
+        snapshots.Add(new PlayerStateSnapshot(transform.position, playerHealth.currentHealth, Time.time));
+        
+        // Calculate time interval between each point
+        float timeStep = maxRewindTime / (numPoints - 1);
+        
+        // Get snapshots at regular time intervals
+        for (int i = 1; i < numPoints; i++)
+        {
+            float targetTime = Time.time - (i * timeStep);
+            PlayerStateSnapshot snapshot = GetSnapshotAtTime(targetTime);
+            
+            if (snapshot != null)
+            {
+                snapshots.Add(snapshot);
+            }
+        }
+        
+        return snapshots;
+    }
+    
+    private PlayerStateSnapshot GetSnapshotAtTime(float targetTime)
+    {
+        // Find the snapshot closest to the target time
+        int closestIndex = 0;
+        float closestTimeDiff = float.MaxValue;
+        
+        for (int i = 0; i < bufferSize; i++)
+        {
+            if (stateBuffer[i] == null) continue;
+            
+            float timeDiff = Mathf.Abs(stateBuffer[i].TimeStamp - targetTime);
+            if (timeDiff < closestTimeDiff)
+            {
+                closestTimeDiff = timeDiff;
+                closestIndex = i;
+            }
+        }
+        
+        return stateBuffer[closestIndex];
     }
 
     private void RecordState()

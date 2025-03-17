@@ -3,35 +3,95 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+// Enhanced bullet base class
 public class Bullet : MonoBehaviour
 {
+    [Header("Bullet Properties")]
+    public int damage = 1;
+    public float lifetime = 2f;
+    public WeaponBase sourceWeapon;
+    
+    [Header("Effects")]
+    public GameObject impactEffectPrefab;
+    public AudioClip impactSound;
+    
+    private float _spawnTime;
+    
+    private void Start()
+    {
+        _spawnTime = Time.time;
+    }
+    
+    private void Update()
+    {
+        // Destroy bullet after lifetime
+        if (Time.time > _spawnTime + lifetime)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        ProcessHit(collision.gameObject);
+    }
+    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        ProcessHit(collision.gameObject);
+    }
+    
+    protected virtual void ProcessHit(GameObject hitObject)
+    {
+        // Create impact effect
+        if (impactEffectPrefab != null)
+        {
+            Instantiate(impactEffectPrefab, transform.position, Quaternion.identity);
+        }
+        
+        // Play impact sound
+        if (impactSound != null)
+        {
+            AudioSource.PlayClipAtPoint(impactSound, transform.position);
+        }
+        
+        // Process damage for different enemy types
+        ApplyDamage(hitObject);
+        
+        // Destroy bullet
         Destroy(gameObject);
-
-        if(collision.gameObject.TryGetComponent<GEMathLogic>(out GEMathLogic geMathEnemy))
+    }
+    
+    protected virtual void ApplyDamage(GameObject hitObject)
+    {
+        // Check for all enemy types using a more efficient approach
+        IDamageable damageable = hitObject.GetComponent<IDamageable>();
+        if (damageable != null)
         {
-            geMathEnemy.TakeDamage(1);
+            damageable.TakeDamage(damage);
+            return;
         }
-
-        if(collision.gameObject.TryGetComponent<DiscreteMathLogic>(out DiscreteMathLogic discreteMathEnemy))
+        
+        // Legacy damage application (for backward compatibility)
+        if (hitObject.TryGetComponent<GEMathLogic>(out GEMathLogic geMathEnemy))
         {
-            discreteMathEnemy.TakeDamage(1);
+            geMathEnemy.TakeDamage(damage);
         }
-
-        if(collision.gameObject.TryGetComponent<ChemLogic>(out ChemLogic chemEnemy))
+        else if (hitObject.TryGetComponent<DiscreteMathLogic>(out DiscreteMathLogic discreteMathEnemy))
         {
-            chemEnemy.TakeDamage(1);
+            discreteMathEnemy.TakeDamage(damage);
         }
-
-        if(collision.gameObject.TryGetComponent<CalculusLogic>(out CalculusLogic calculusEnemy))
+        else if (hitObject.TryGetComponent<ChemLogic>(out ChemLogic chemEnemy))
         {
-            calculusEnemy.TakeDamage(1);
+            chemEnemy.TakeDamage(damage);
         }
-
-        if(collision.gameObject.TryGetComponent<BOSSLogic>(out BOSSLogic BOSSEnemy))
+        else if (hitObject.TryGetComponent<CalculusLogic>(out CalculusLogic calculusEnemy))
         {
-            BOSSEnemy.TakeDamage(1);
+            calculusEnemy.TakeDamage(damage);
+        }
+        else if (hitObject.TryGetComponent<BOSSLogic>(out BOSSLogic bossEnemy))
+        {
+            bossEnemy.TakeDamage(damage);
         }
     }
 }
