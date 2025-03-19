@@ -63524,8 +63524,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterRenderer: {fileID: 1460220626}
   weaponRenderer: {fileID: 170724803}
-  firepoint: {fileID: 1807660790}
+  firepoint: {fileID: 1807660791}
   rotationSpeed: 1000
+  weaponFlipThreshold: 0.1
+  useSmoothing: 1
+  aimSmoothing: 5
+  enableWeaponBobbing: 1
+  bobbingAmount: 0.05
+  bobbingSpeed: 1
 --- !u!1 &2046825258
 GameObject:
   m_ObjectHideFlags: 0
