@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Base weapon parent class with improved aiming and rotation
 public class WeaponParentRanged : MonoBehaviour
 {
     [Header("References")]
     public SpriteRenderer characterRenderer, weaponRenderer;
-    public Transform firepoint;
+    // Removed the firepoint reference since all weapons share the same one
+    // public Transform firepoint;
     
     [Header("Settings")]
     public float rotationSpeed = 1000f;
@@ -67,12 +67,12 @@ public class WeaponParentRanged : MonoBehaviour
         if (_currentDirection.x < -weaponFlipThreshold)
         {
             scale.y = -1;
-            RotateFirepoint(90f);
+            // Removed RotateFirepoint(90f) because the firepoint is shared and handled externally
         }
         else if (_currentDirection.x > weaponFlipThreshold)
         {
             scale.y = 1;
-            RotateFirepoint(-90f);
+            // Removed RotateFirepoint(-90f)
         }
         
         transform.localScale = scale;
@@ -100,10 +100,5 @@ public class WeaponParentRanged : MonoBehaviour
         transform.localPosition = _originalLocalPosition + new Vector3(0f, bobbingOffset, 0f);
     }
 
-    private void RotateFirepoint(float targetRotation)
-    {
-        float currentRotation = firepoint.localEulerAngles.z;
-        float newRotation = Mathf.MoveTowardsAngle(currentRotation, targetRotation, Time.deltaTime * rotationSpeed);
-        firepoint.localEulerAngles = new Vector3(0f, 0f, newRotation);
-    }
+    // Removed RotateFirepoint method because a shared firepoint will be managed externally.
 }
