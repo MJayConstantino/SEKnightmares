@@ -15,8 +15,6 @@ public abstract class WeaponBase : MonoBehaviour
     public AudioClip reloadSound;
     
     [Header("Effects")]
-    public GameObject muzzleFlashPrefab;
-    public float muzzleFlashDuration = 0.1f;
     public bool useScreenShake = true;
     public float screenShakeAmount = 0.1f;
     public float screenShakeDuration = 0.1f;
@@ -57,16 +55,10 @@ public abstract class WeaponBase : MonoBehaviour
             audioSource.PlayOneShot(fireSound);
         }
         
-        // Show muzzle flash
-        if (muzzleFlashPrefab != null)
-        {
-            StartCoroutine(ShowMuzzleFlash());
-        }
-        
         // Apply screen shake
         if (useScreenShake)
         {
-            // Notify camera to shake - implementation depends on your camera system
+            // Notify camera to shake
             CameraShaker.Instance?.Shake(screenShakeAmount, screenShakeDuration);
         }
         
@@ -101,12 +93,5 @@ public abstract class WeaponBase : MonoBehaviour
         // Refill ammo
         currentAmmo = magazineSize;
         isReloading = false;
-    }
-    
-    protected IEnumerator ShowMuzzleFlash()
-    {
-        GameObject muzzleFlash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation, firePoint);
-        yield return new WaitForSeconds(muzzleFlashDuration);
-        Destroy(muzzleFlash);
     }
 }

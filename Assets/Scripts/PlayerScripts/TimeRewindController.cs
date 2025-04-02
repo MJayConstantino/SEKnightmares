@@ -68,6 +68,9 @@ public class TimeRewindController : MonoBehaviour
     private bool canRewind = true;
     private Color originalColor;
 
+    // New: reference to the weapon manager
+    private WeaponManager weaponManager;
+
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
@@ -96,6 +99,9 @@ public class TimeRewindController : MonoBehaviour
         {
             CreateTrail();
         }
+        
+        // Get the weapon manager from this GameObject
+        weaponManager = GetComponent<WeaponManager>();
     }
 
     private void CreatePreviewObject()
@@ -421,6 +427,12 @@ public class TimeRewindController : MonoBehaviour
         // Reset visual effect
         if (useVisualEffect)
             spriteRenderer.color = originalColor;
+        
+        // NEW: Change the weapon randomly after rewind
+        if (weaponManager != null)
+        {
+            weaponManager.SwitchToRandomWeapon();
+        }
         
         // Start cooldown
         StartCoroutine(RewindCooldown());

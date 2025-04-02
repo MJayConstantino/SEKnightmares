@@ -8,11 +8,6 @@ public class WeaponManager : MonoBehaviour
     [Header("Weapons")]
     public List<WeaponBase> availableWeapons = new List<WeaponBase>();
     
-    [Header("Settings")]
-    public KeyCode nextWeaponKey = KeyCode.E;
-    public KeyCode previousWeaponKey = KeyCode.Q;
-    public KeyCode[] weaponHotkeys = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4 };
-    
     private int _currentWeaponIndex = 0;
     private WeaponBase _currentWeapon;
     
@@ -23,41 +18,6 @@ public class WeaponManager : MonoBehaviour
         {
             _currentWeaponIndex = 0;
             EquipWeapon(_currentWeaponIndex);
-        }
-    }
-    
-    void Update()
-    {
-        // Handle weapon switching
-        if (Input.GetKeyDown(nextWeaponKey))
-        {
-            SwitchToNextWeapon();
-        }
-        else if (Input.GetKeyDown(previousWeaponKey))
-        {
-            SwitchToPreviousWeapon();
-        }
-        
-        // Handle hotkeys
-        for (int i = 0; i < weaponHotkeys.Length && i < availableWeapons.Count; i++)
-        {
-            if (Input.GetKeyDown(weaponHotkeys[i]))
-            {
-                EquipWeapon(i);
-                break;
-            }
-        }
-        
-        // Handle firing
-        if (Input.GetButton("Fire1") && _currentWeapon != null)
-        {
-            _currentWeapon.Fire();
-        }
-        
-        // Handle reloading
-        if (Input.GetKeyDown(KeyCode.R) && _currentWeapon != null)
-        {
-            StartCoroutine(_currentWeapon.Reload());
         }
     }
     
@@ -77,6 +37,20 @@ public class WeaponManager : MonoBehaviour
         EquipWeapon(_currentWeaponIndex);
     }
     
+    // New method: switch to a random weapon from the list
+    public void SwitchToRandomWeapon()
+    {
+        if (availableWeapons.Count == 0) return;
+        int randomIndex = Random.Range(0, availableWeapons.Count);
+        EquipWeapon(randomIndex);
+    }
+    
+    public void SwitchToWeaponIndex(int index)
+    {
+        if (index < 0 || index >= availableWeapons.Count) return;
+        EquipWeapon(index);
+    }
+    
     private void EquipWeapon(int index)
     {
         if (index < 0 || index >= availableWeapons.Count) return;
@@ -93,5 +67,15 @@ public class WeaponManager : MonoBehaviour
         
         // Optional: Play weapon switch animation/sound
         // PlayWeaponSwitchEffect();
+    }
+    
+    public WeaponBase GetCurrentWeapon()
+    {
+        return _currentWeapon;
+    }
+    
+    public int GetCurrentWeaponIndex()
+    {
+        return _currentWeaponIndex;
     }
 }

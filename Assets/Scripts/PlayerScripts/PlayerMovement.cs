@@ -8,12 +8,14 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private int speedPlayer = 5;
     public Rigidbody2D rb;
-    public WeaponCalculator weaponCalculator;
     [SerializeField] AudioSource dashing, fire;
     public Animator animator;
     Vector2 moveDirection, pointerInputRanged;
     [SerializeField]
-    private InputActionReference movement, dash, attack, pointerPosition;
+    private InputActionReference movement, dash, attack, pointerPosition, reload;
+    
+    [Header("Weapon System")]
+    [SerializeField] private WeaponManager weaponManager;
 
     [Header("Dash Settings")]
     [SerializeField] float dashSpeed = 10f;
@@ -21,24 +23,36 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashCooldown = 3f;
     bool isDashing;
     bool canDash = true;
+    
     private WeaponParentRanged weaponParentRanged;
 
     private void Start()
     {
         canDash = true;
+        
+        // Initialize the weapon manager if it's not assigned
+        if (weaponManager == null)
+        {
+            weaponManager = GetComponent<WeaponManager>();
+            if (weaponManager == null)
+            {
+                weaponManager = gameObject.AddComponent<WeaponManager>();
+            }
+        }
     }
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         weaponParentRanged = GetComponentInChildren<WeaponParentRanged>();
-        animator= GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     private void OnMovement(InputValue value)
     {
         moveDirection = value.Get<Vector2>();
     }
+
     void Update()
     {
         if (isDashing)
@@ -48,12 +62,28 @@ public class PlayerMovement : MonoBehaviour
 
         pointerInputRanged = GetPointerInput();
         weaponParentRanged.PointerPosition = pointerInputRanged;
-        if (attack.action.triggered)
+        
+        // Handle weapon firing
+        if (attack.action.triggered && weaponManager != null)
         {
             fire.Play();
-            weaponCalculator.Fire();
+            if (weaponManager.GetCurrentWeapon() != null)
+            {
+                weaponManager.GetCurrentWeapon().Fire();
+            }
+        }
+        
+        // Handle reloading
+        if (reload.action.triggered && weaponManager != null)
+        {
+            WeaponBase currentWeapon = weaponManager.GetCurrentWeapon();
+            if (currentWeapon != null)
+            {
+                StartCoroutine(currentWeapon.Reload());
+            }
         }
 
+        // Handle dashing
         if (dash.action.triggered && canDash)
         {
             dashing.Play();
