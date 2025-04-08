@@ -49115,7 +49115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 912612898}
   m_Layer: 0
-  m_Name: Firepoint
+  m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59786,9 +59786,6 @@ MonoBehaviour:
   - {fileID: -2920516841760193520, guid: 75c3c60698f4497408f35700f3fd9790, type: 3}
   - {fileID: -5478704976165836594, guid: f47ce70ca5245be40a228881dea32844, type: 3}
   - {fileID: 7190424059308191944, guid: 0d1c4ea7e554b0946a382e03230a7dff, type: 3}
-  nextWeaponKey: 101
-  previousWeaponKey: 113
-  weaponHotkeys: 31000000320000003300000034000000
 --- !u!1 &1460220609
 GameObject:
   m_ObjectHideFlags: 0
@@ -59911,7 +59908,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedPlayer: 6
   rb: {fileID: 1460220614}
-  weaponCalculator: {fileID: 0}
   dashing: {fileID: 1460220624}
   fire: {fileID: 1460220623}
   animator: {fileID: 0}
@@ -59919,6 +59915,8 @@ MonoBehaviour:
   dash: {fileID: -3993237128706482214, guid: 390149ff3137e614d8987ac36377acb8, type: 3}
   attack: {fileID: -7676653592381861196, guid: 390149ff3137e614d8987ac36377acb8, type: 3}
   pointerPosition: {fileID: 8306784451087540230, guid: 390149ff3137e614d8987ac36377acb8, type: 3}
+  reload: {fileID: 5804958450898381138, guid: 390149ff3137e614d8987ac36377acb8, type: 3}
+  weaponManager: {fileID: 1451846157}
   dashSpeed: 20
   dashDuration: 0.25
   dashCooldown: 3
@@ -60685,7 +60683,7 @@ MonoBehaviour:
   maxRewindTime: 5
   recordFrequency: 0.1
   rewindCooldown: 10
-  rewindKey: 114
+  rewindKey: 304
   rewindSoundEffect: {fileID: 0}
   useVisualEffect: 1
   rewindColor: {r: 0, g: 0.8, b: 1, a: 0.8}
