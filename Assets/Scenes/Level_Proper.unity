@@ -60665,7 +60665,9 @@ MonoBehaviour:
   showTrail: 1
   trailColor: {r: 0, g: 0.7, b: 1, a: 0.5}
   trailWidth: 0.1
-  trailSegments: 10
+  trailSegments: 100
+  trailFadeWidth: 0.1
+  trailEndColor: {r: 0, g: 0.7, b: 1, a: 0.1}
 --- !u!1 &1492520547
 GameObject:
   m_ObjectHideFlags: 0
