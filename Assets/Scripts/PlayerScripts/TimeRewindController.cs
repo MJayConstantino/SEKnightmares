@@ -441,7 +441,6 @@ public class TimeRewindController : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Clean up the preview object when this script is destroyed
         if (previewObject != null)
         {
             Destroy(previewObject);
