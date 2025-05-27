@@ -8,11 +8,9 @@ public class WeaponParentRanged : MonoBehaviour
 
     private void Start()
     {
-        // Get character renderer from parent (Player)
         if (!characterRenderer)
             characterRenderer = GetComponentInParent<SpriteRenderer>();
         
-        // Get weapon renderer from child (Calculator)
         if (!weaponRenderer)
             weaponRenderer = GetComponentInChildren<SpriteRenderer>();
     }
@@ -22,12 +20,10 @@ public class WeaponParentRanged : MonoBehaviour
         Vector2 direction = (PointerPosition - (Vector2)transform.position).normalized;
         transform.right = direction;
 
-        // Flip weapon based on direction
         Vector3 scale = transform.localScale;
         scale.y = direction.x < 0 ? -1 : 1;
         transform.localScale = scale;
 
-        // Update weapon rendering order
         UpdateWeaponOrder();
     }
 

@@ -355,10 +355,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 25
-  maxHealth: 10
+  maxHealth: 25
   moveSpeed: 0
-  experienceValue: 4
-  damageAmount: 6
+  experienceValue: 5
+  damageAmount: 7
   spawnSound: {fileID: 9124575580006113079}
   hurtSound: {fileID: 9124575580006113079}
   deathSound: {fileID: 9124575580006113079}

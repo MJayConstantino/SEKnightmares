@@ -355,8 +355,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  maxHealth: 10
-  moveSpeed: 3
+  maxHealth: 50
+  moveSpeed: 4
   experienceValue: 1
   damageAmount: 2
   spawnSound: {fileID: 7220997750688311287}

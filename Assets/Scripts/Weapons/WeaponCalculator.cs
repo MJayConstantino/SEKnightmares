@@ -48,7 +48,7 @@ public class WeaponCalculator : BaseWeapon
         base.ApplyUpgrade();
         
         // Every few levels, add more projectiles
-        if (weaponLevel % 3 == 0)
+        if (weaponLevel % 2 == 0)
         {
             projectilesPerShot++;
             spreadAngle += 5f;

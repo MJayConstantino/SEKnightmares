@@ -22682,7 +22682,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1807660791}
+  - {fileID: 1749192762}
   m_Father: {fileID: 2042759577}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &170724803
@@ -22750,11 +22750,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1277350902869242949, guid: 67404b14dc0bc4a4893cb1abbb1f3e74, type: 3}
-  firePoint: {fileID: 1807660791}
+  firePoint: {fileID: 1749192762}
   baseFireForce: 10
   baseDamage: 1
   baseFireRate: 1
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 1460220623}
+  bulletLifetime: 2
   spreadAngle: 0
   projectilesPerShot: 1
 --- !u!1 &186137125
@@ -49480,20 +49481,20 @@ MonoBehaviour:
     - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
     spawnInterval: 2.5
   - waveName: 2nd Test
-    noOfEnemies: 10
+    noOfEnemies: 5
     typeOfEnemies:
     - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
     - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
     spawnInterval: 3
   - waveName: 3rd Test
-    noOfEnemies: 15
+    noOfEnemies: 10
     typeOfEnemies:
     - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
     - {fileID: 2130760986725788217, guid: cff6b37a04aa257499f3fb24e930ef11, type: 3}
     - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
     spawnInterval: 3
   - waveName: 4th Test
-    noOfEnemies: 20
+    noOfEnemies: 15
     typeOfEnemies:
     - {fileID: 2130760986725788217, guid: cff6b37a04aa257499f3fb24e930ef11, type: 3}
     - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
@@ -60021,7 +60022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedPlayer: 6
-  dashingSound: {fileID: 1460220623}
+  dashingSound: {fileID: 1460220624}
   animator: {fileID: 1460220625}
   rb: {fileID: 1460220614}
   movement: {fileID: 5856407872578533958, guid: 390149ff3137e614d8987ac36377acb8, type: 3}
@@ -60204,9 +60205,9 @@ MonoBehaviour:
   damageFlashDuration: 0.2
   deathDelay: 1
   transition: {fileID: 1146837999}
-  damageTakenSound: {fileID: 0}
-  deathSound: {fileID: 0}
-  levelUpSound: {fileID: 0}
+  damageTakenSound: {fileID: 1460220622}
+  deathSound: {fileID: 1460220621}
+  levelUpSound: {fileID: 1460220620}
   videoPlayer: {fileID: 0}
 --- !u!82 &1460220620
 AudioSource:
@@ -60506,7 +60507,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 167cf84f37bf7a44593e855f5ab11b52, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c8ecb28ebd6a4b14483b9d7b0b6ab74f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -60927,7 +60928,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1554597058}
+  m_Father: {fileID: 2042759577}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1482732870
 MonoBehaviour:
@@ -61131,7 +61132,6 @@ Transform:
   m_Children:
   - {fileID: 2042759577}
   - {fileID: 866978053}
-  - {fileID: 1482732869}
   m_Father: {fileID: 1460220613}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1562003914
@@ -62074,6 +62074,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1749192761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1749192762}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1749192762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749192761}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0.70363015, w: 0.71056646}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 170724802}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -89.438}
 --- !u!1 &1752710516
 GameObject:
   m_ObjectHideFlags: 0
@@ -62149,37 +62180,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752710516}
   m_CullTransparentMesh: 1
---- !u!1 &1807660790
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1807660791}
-  m_Layer: 0
-  m_Name: FirePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1807660791
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1807660790}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.007312114, y: -0.007312114, z: -0.707069, w: 0.707069}
-  m_LocalPosition: {x: 0.014, y: -0.02, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 170724802}
-  m_LocalEulerAnglesHint: {x: 0, y: -1.185, z: -90}
 --- !u!1 &1809410089
 GameObject:
   m_ObjectHideFlags: 0
@@ -63817,6 +63817,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 170724802}
+  - {fileID: 1482732869}
   m_Father: {fileID: 1554597058}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2042759578

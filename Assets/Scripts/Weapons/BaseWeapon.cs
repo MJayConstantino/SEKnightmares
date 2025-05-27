@@ -7,9 +7,9 @@ public abstract class BaseWeapon : MonoBehaviour
     [SerializeField] protected Transform firePoint;
     [SerializeField] protected float baseFireForce = 20f;
     [SerializeField] protected float baseDamage = 1f;
-    [SerializeField] protected float baseFireRate = 10f;  // Increased default fire rate
+    [SerializeField] protected float baseFireRate = 20f;
     [SerializeField] protected AudioSource shootSound;
-    [SerializeField] protected float bulletLifetime = 2f; // Added bullet lifetime
+    [SerializeField] protected float bulletLifetime = 2f;
 
     protected int weaponLevel = 1;
     protected float currentDamage;
