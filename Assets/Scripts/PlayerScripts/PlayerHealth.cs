@@ -26,6 +26,9 @@ public class PlayerHealth : MonoBehaviour
     public int CurrentHealth { get; private set; }
     public int CurrentExperience { get; private set; }
 
+    public delegate void LevelUpHandler();
+    public event LevelUpHandler OnLevelUp;
+
     private void Awake()
     {
         playerRenderer = GetComponent<SpriteRenderer>();
@@ -89,7 +92,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
-        if (transition) transition.SetBool("IsDead", true);
+        // if (transition) transition.SetBool("IsDead", true);
         if (deathSound) deathSound.Play();
         StartCoroutine(PlayerDeath());
     }
@@ -128,10 +131,15 @@ public class PlayerHealth : MonoBehaviour
         maxHealth += 5;
         CurrentHealth = maxHealth;
         
+        // Trigger the level up event
+        OnLevelUp?.Invoke();
+        
         CurrentExperience = 0;
         maxExperience += 5;
 
-        // Notify WeaponManager of level up
+        if (levelUpSound) levelUpSound.Play();
+        
+        // Notify WeaponManager
         if (WeaponManager.Instance != null)
         {
             WeaponManager.Instance.HandlePlayerLevelUp();
