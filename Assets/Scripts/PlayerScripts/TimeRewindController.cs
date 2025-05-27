@@ -83,7 +83,7 @@ public class TimeRewindController : MonoBehaviour
         // Initialize the buffer with current state
         for (int i = 0; i < bufferSize; i++)
         {
-            stateBuffer[i] = new PlayerStateSnapshot(transform.position, playerHealth.currentHealth, Time.time);
+            stateBuffer[i] = new PlayerStateSnapshot(transform.position, playerHealth.CurrentHealth, Time.time);
         }
         
         originalColor = spriteRenderer.color;
@@ -187,10 +187,15 @@ public class TimeRewindController : MonoBehaviour
             }
         }
         
-        // Check for rewind key press
+        // Check for rewind key press (R key)
         if (Input.GetKeyDown(rewindKey) && canRewind && !isRewinding)
         {
             StartRewind();
+            // Play sound effect only when rewinding
+            if (rewindSoundEffect != null)
+            {
+                rewindSoundEffect.Play();
+            }
         }
 
         if (isRewinding)
@@ -300,7 +305,7 @@ public class TimeRewindController : MonoBehaviour
         List<PlayerStateSnapshot> snapshots = new List<PlayerStateSnapshot>();
         
         // Add the current position first
-        snapshots.Add(new PlayerStateSnapshot(transform.position, playerHealth.currentHealth, Time.time));
+        snapshots.Add(new PlayerStateSnapshot(transform.position, playerHealth.CurrentHealth, Time.time));
         
         // Calculate time interval between each point
         float timeStep = maxRewindTime / (numPoints - 1);
@@ -347,7 +352,7 @@ public class TimeRewindController : MonoBehaviour
         currentIndex = (currentIndex + 1) % bufferSize;
         stateBuffer[currentIndex] = new PlayerStateSnapshot(
             transform.position,
-            playerHealth.currentHealth,
+            playerHealth.CurrentHealth,
             Time.time
         );
     }
@@ -373,11 +378,9 @@ public class TimeRewindController : MonoBehaviour
         
         // Visual effect
         if (useVisualEffect)
+        {
             spriteRenderer.color = rewindColor;
-        
-        // Play sound effect
-        if (rewindSoundEffect != null)
-            rewindSoundEffect.Play();
+        }
     }
 
     private void RewindTime()
@@ -403,7 +406,7 @@ public class TimeRewindController : MonoBehaviour
         if (stateBuffer[targetIndex] != null)
         {
             transform.position = stateBuffer[targetIndex].Position;
-            playerHealth.currentHealth = stateBuffer[targetIndex].Health;
+            playerHealth.TakeDamage(playerHealth.CurrentHealth - stateBuffer[targetIndex].Health);
         }
         
         // End rewind

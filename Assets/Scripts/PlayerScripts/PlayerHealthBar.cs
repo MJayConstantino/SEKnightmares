@@ -1,37 +1,71 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class PlayerHealthBar : MonoBehaviour
-    {
-    public PlayerHealth playerHealth;
-    public Image FillImage;
+{
+    [Header("References")]
+    [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] private Image fillImage;
+    
+    [Header("Colors")]
+    [SerializeField] private Color fullHealthColor = Color.green;
+    [SerializeField] private Color lowHealthColor = Color.red;
+    [SerializeField] private float lowHealthThreshold = 0.3f;
+
     private Slider slider;
 
-    void Awake()
+    private void Awake()
     {
         slider = GetComponent<Slider>();
+        ValidateReferences();
     }
 
-    void Update()
+    private void ValidateReferences()
     {
-        if (playerHealth.currentHealth < playerHealth.maxHealth)
+        if (!playerHealth)
         {
-            FillImage.color = Color.red;
-        }
-        else
-        {
-            FillImage.color = Color.green;
+            playerHealth = FindObjectOfType<PlayerHealth>();
+            if (!playerHealth)
+            {
+                Debug.LogError("PlayerHealth reference missing on " + gameObject.name);
+                enabled = false;
+                return;
+            }
         }
 
-        float fillValue = playerHealth.currentHealth;
-        slider.value = fillValue;
-
-        if (slider.maxValue != playerHealth.maxHealth)
+        if (!fillImage)
         {
-            slider.maxValue = playerHealth.maxHealth;
+            fillImage = GetComponentInChildren<Image>();
+            if (!fillImage)
+            {
+                Debug.LogError("Fill Image reference missing on " + gameObject.name);
+                enabled = false;
+                return;
+            }
         }
+
+        if (!slider)
+        {
+            Debug.LogError("Slider component missing on " + gameObject.name);
+            enabled = false;
+            return;
+        }
+    }
+
+    private void Update()
+    {
+        if (!playerHealth) return;
+
+        float healthPercentage = playerHealth.GetHealthPercentage();
+        UpdateHealthBar(healthPercentage);
+    }
+
+    private void UpdateHealthBar(float percentage)
+    {
+        slider.value = percentage;
+        
+        fillImage.color = percentage <= lowHealthThreshold ? 
+            lowHealthColor : 
+            Color.Lerp(lowHealthColor, fullHealthColor, percentage);
     }
 }

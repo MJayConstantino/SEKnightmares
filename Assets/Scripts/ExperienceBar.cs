@@ -18,7 +18,7 @@ public class ExperienceBar : MonoBehaviour
 
     void Update()
     {
-        float fillValue = playerHealth.currentExperience;
+        float fillValue = playerHealth.CurrentExperience;
         experienceSlider.value = fillValue;
         experienceSlider.maxValue = playerHealth.maxExperience;
         UpdateTextValue();
@@ -26,6 +26,6 @@ public class ExperienceBar : MonoBehaviour
 
     void UpdateTextValue()
     {
-        expText.text = "Player Level: " + playerHealth.currentLevel;
+        expText.text = "Player Level: " + playerHealth.CurrentLevel;
     }
 }

@@ -1,23 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponCalculator : MonoBehaviour
+public class WeaponCalculator : BaseWeapon
 {
-    public GameObject bulletPrefab;
-    public Transform firePoint;
-    public float fireForce = 1f;
+    [Header("Calculator Specific")]
+    [SerializeField] private float spreadAngle = 15f;
+    [SerializeField] private int projectilesPerShot = 1;
 
-    public void Fire()
+    protected override void Start()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        if (bullet != null)
+        base.Start();
+        if (!firePoint)
         {
-            Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-            if (bulletRb != null)
+            firePoint = transform.Find("FirePoint");
+            if (!firePoint)
             {
-                bulletRb.AddForce(firePoint.up * fireForce, ForceMode2D.Impulse);
+                Debug.LogError("FirePoint not found on " + gameObject.name);
+                enabled = false;
             }
+        }
+    }
+
+    public override void Fire()
+    {
+        if (!CanFire()) return;
+
+        float startAngle = -spreadAngle / 2f;
+        float angleStep = projectilesPerShot > 1 ? spreadAngle / (projectilesPerShot - 1) : 0;
+
+        // Get the base rotation from the weapon parent
+        Quaternion baseRotation = transform.parent.rotation;
+
+        for (int i = 0; i < projectilesPerShot; i++)
+        {
+            float currentAngle = startAngle + (angleStep * i);
+            Quaternion bulletRotation = baseRotation * Quaternion.Euler(0, 0, currentAngle);
+            
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, bulletRotation);
+            InitializeBullet(bullet, bulletRotation);
+        }
+
+        if (shootSound) shootSound.Play();
+        UpdateNextFireTime();
+    }
+
+    protected override void ApplyUpgrade()
+    {
+        base.ApplyUpgrade();
+        
+        // Every few levels, add more projectiles
+        if (weaponLevel % 3 == 0)
+        {
+            projectilesPerShot++;
+            spreadAngle += 5f;
         }
     }
 }

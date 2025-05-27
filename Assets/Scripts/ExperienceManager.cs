@@ -8,15 +8,15 @@ public class ExperienceManager : MonoBehaviour
     public delegate void ExperienceChangeHandler(int amount);
     public event ExperienceChangeHandler OnExperienceChange;
     private void Awake()
-
     {
-        if(Instance != null && Instance != this)
+        if (Instance == null)
         {
-            Destroy(this);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Instance = this;
+            Destroy(gameObject);
         }
     }
 

@@ -2403,7 +2403,7 @@ GameObject:
   - component: {fileID: 6261735324344195136}
   - component: {fileID: 4882581939815784239}
   m_Layer: 7
-  m_Name: BOSS
+  m_Name: BigBossEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2553,40 +2553,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 5709911963717865507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f0272992c857ab49957f3fe391a62a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c41d1c22b77ec94fad83ff04b58f118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  maxHealth: 120
+  health: 100
+  maxHealth: 100
   moveSpeed: 0
-  bulletSpawnPoint:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  experienceValue: 50
+  damageAmount: 5
+  spawnSound: {fileID: 846323807169817867}
+  hurtSound: {fileID: 846323807169817867}
+  deathSound: {fileID: 846323807169817867}
+  firePoint: {fileID: 3504244760131495894}
   bulletPrefab: {fileID: 1750530348727430944, guid: 0d8e65a354a8dc540a04921cc33892e1, type: 3}
-  timeBetweenShots: 0.5
-  bossFire: {fileID: 846323807169817867}
-  bossDeath: {fileID: 2705738146610243908}
-  bossSpawn: {fileID: 8772755610114827281}
-  secondPhase: {fileID: 4882581939815784239}
+  timeBetweenShots: 2
+  attackSound: {fileID: 846323807169817867}
+  phaseTransitionSound: {fileID: 846323807169817867}
+  animator: {fileID: 6261735324344195136}
+  healthBarCanvas: {fileID: 9068639224388452894}
   bossAttack: {fileID: 4612937191194168043}
   bossCollider: {fileID: 4929404679114944160}
-  healthBarCanvas: {fileID: 9068639224388452894}
-  dissolve: {fileID: 779493478523090811}
-  animator: {fileID: 6261735324344195136}
+  attackInterval: 2
 --- !u!114 &4612937191194168043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2603,7 +2590,7 @@ MonoBehaviour:
   - phaseName: Phase1
     fireInterval: 0.5
   - phaseName: Phase2
-    fireInterval: 0.5
+    fireInterval: 1
   bulletPrefab: {fileID: 1750530348727430944, guid: 0d8e65a354a8dc540a04921cc33892e1, type: 3}
   firstPhaseFirePoints:
   - {fileID: 3504244760131495894}
