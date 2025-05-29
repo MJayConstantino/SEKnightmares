@@ -316,7 +316,7 @@ MonoBehaviour:
   health: 30
   maxHealth: 30
   moveSpeed: 3
-  experienceValue: 4
+  experienceValue: 10
   damageAmount: 6
   spawnSound: {fileID: 73503963497183434}
   hurtSound: {fileID: 6850109006984573071}
@@ -326,7 +326,6 @@ MonoBehaviour:
   dashCooldown: 3
   dashSound: {fileID: 9052433838611826161}
   dashTrail: {fileID: -449966994070909260}
-  trailColor: {r: 1, g: 1, b: 1, a: 0.5}
   trailTime: 1
 --- !u!70 &6883284270995828782
 CapsuleCollider2D:
