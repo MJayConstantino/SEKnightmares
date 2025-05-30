@@ -85,9 +85,19 @@ public class DashingEnemy : BaseEnemy
     {
         isDashing = true;
         canDash = false;
+
+        // Check for obstacles in dash direction
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDirection, dashSpeed * dashDuration, obstacleLayer);
+        
+        if (hit.collider != null)
+        {
+            // Calculate reflection direction
+            Vector2 dashDirection = Vector2.Reflect(moveDirection, hit.normal);
+            moveDirection = dashDirection;
+        }
+
         float originalSpeed = moveSpeed;
         moveSpeed = dashSpeed;
-
         dashTrail.enabled = true;
         if (dashSound) dashSound.Play();
 

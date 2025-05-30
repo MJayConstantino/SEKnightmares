@@ -2556,14 +2556,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c41d1c22b77ec94fad83ff04b58f118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 300
-  maxHealth: 300
+  health: 1000
+  maxHealth: 1000
   moveSpeed: 0
   experienceValue: 100
-  damageAmount: 10
+  damageAmount: 15
+  baseHealth: 10
+  baseMoveSpeed: 2
+  baseDamage: 1
   spawnSound: {fileID: 846323807169817867}
   hurtSound: {fileID: 846323807169817867}
   deathSound: {fileID: 846323807169817867}
+  stuckCheckInterval: 0.5
+  stuckThreshold: 0.1
+  unstuckForce: 5
+  obstacleDetectionRange: 1
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  isStuck: 0
   firePoint: {fileID: 3504244760131495894}
   bulletPrefab: {fileID: 1750530348727430944, guid: 0d8e65a354a8dc540a04921cc33892e1, type: 3}
   timeBetweenShots: 2
