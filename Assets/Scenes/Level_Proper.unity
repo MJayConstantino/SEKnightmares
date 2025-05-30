@@ -141227,6 +141227,9 @@ MonoBehaviour:
   trailEndColor: {r: 0, g: 0.7, b: 1, a: 0.1}
   ghostColor: {r: 0, g: 0.7, b: 1, a: 0.5}
   ghostScale: 1
+  glowColor: {r: 0, g: 0.7, b: 1, a: 1}
+  glowIntensity: 2
+  glowRadius: 1
 --- !u!82 &1460220629
 AudioSource:
   m_ObjectHideFlags: 0
@@ -141237,7 +141240,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 167cf84f37bf7a44593e855f5ab11b52, type: 3}
+  m_audioClip: {fileID: 8300000, guid: da9bc57d8741f054f9b742b8bff14bf8, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

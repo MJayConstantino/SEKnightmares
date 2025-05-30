@@ -27,11 +27,15 @@ public class TimeRewindController : MonoBehaviour
     [SerializeField] private Color trailEndColor = new Color(0, 0.7f, 1f, 0.1f); // Color at the end of the trail
 
     [Header("Ghost Settings")]
-    [SerializeField] private Color ghostColor = new Color(0, 0.7f, 1f, 0.5f); // Blue transparent color
+    [SerializeField] private Color ghostColor = new Color(0, 0.7f, 1f, 0.5f);
     [SerializeField] private float ghostScale = 1f;
+    [SerializeField] private Color glowColor = new Color(0, 0.7f, 1f, 1f);
+    [SerializeField] private float glowIntensity = 2f;
+    [SerializeField] private float glowRadius = 1f;
     private GameObject ghostObject;
     private SpriteRenderer ghostRenderer;
     private Animator ghostAnimator;
+    private UnityEngine.Rendering.Universal.Light2D ghostGlow;
     
     // Components
     private PlayerMovement playerMovement;
@@ -275,6 +279,20 @@ public class TimeRewindController : MonoBehaviour
         // Set initial scale
         ghostObject.transform.localScale = transform.localScale * ghostScale;
 
+        ghostGlow = ghostObject.AddComponent<UnityEngine.Rendering.Universal.Light2D>();
+        ghostGlow.lightType = UnityEngine.Rendering.Universal.Light2D.LightType.Point;
+        ghostGlow.color = glowColor;
+        ghostGlow.intensity = glowIntensity;
+        ghostGlow.pointLightOuterRadius = glowRadius;
+        ghostGlow.pointLightInnerRadius = glowRadius * 0.5f;
+        ghostGlow.shadowIntensity = 0;
+        
+        // Create material for ghost with emission
+        Material glowMaterial = new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Lit-Default"));
+        glowMaterial.EnableKeyword("_EMISSION");
+        glowMaterial.SetColor("_EmissionColor", glowColor * glowIntensity);
+        ghostRenderer.material = glowMaterial;
+
         // Add animator if player has one
         if (playerAnimator != null)
         {
@@ -443,6 +461,12 @@ public class TimeRewindController : MonoBehaviour
             transform.localScale.y * ghostScale,
             transform.localScale.z * ghostScale
         );
+
+        if (ghostGlow != null)
+    {
+        float pulse = (Mathf.Sin(Time.time * 2f) + 1f) * 0.5f;
+        ghostGlow.intensity = glowIntensity * (0.8f + (pulse * 0.2f));
+    }
 
         // Update ghost animation if it exists
         if (ghostAnimator != null && playerAnimator != null)
