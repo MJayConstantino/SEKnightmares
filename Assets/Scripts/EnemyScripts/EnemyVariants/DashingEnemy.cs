@@ -4,9 +4,9 @@ using UnityEngine;
 public class DashingEnemy : BaseEnemy
 {
     [Header("Dash Settings")]
-    [SerializeField] private float dashSpeed = 10f;
+    [SerializeField] private float dashSpeed = 15f;
     [SerializeField] private float dashDuration = 0.5f;
-    [SerializeField] private float dashCooldown = 3f;
+    [SerializeField] private float dashCooldown = 6f;
     [SerializeField] private AudioSource dashSound;
     
     [Header("Trail Settings")]
@@ -16,24 +16,66 @@ public class DashingEnemy : BaseEnemy
     private bool canDash = false;
     private bool isDashing = false;
 
-    protected override void Start()
-{
-    base.Start();
-    experienceValue = 1;
-    moveSpeed = 2f;
-    maxHealth = 15f;
-    damageAmount = 5;
-    
-    // Flip the initial scale to correct the sprite orientation
-    transform.localScale = new Vector3(
-        -Mathf.Abs(transform.localScale.x),
-        transform.localScale.y,
-        transform.localScale.z
-    );
-    
-    InitializeComponents();
-    StartCoroutine(EnableDashAfterDelay());
-}
+     protected override void Start()
+    {
+        base.Start();
+        experienceValue = 1;
+        moveSpeed = 2f;
+        maxHealth = 15f;
+        damageAmount = 5;
+        
+        InitializeComponents();
+        StartCoroutine(EnableDashAfterDelay());
+    }
+
+    protected override void UpdateSpriteDirection()
+    {
+        // Override the base sprite direction logic
+        if (moveDirection.x != 0)
+        {
+            transform.localScale = new Vector3(
+                Mathf.Abs(transform.localScale.x) * (moveDirection.x > 0 ? 1 : -1),
+                transform.localScale.y,
+                transform.localScale.z
+            );
+        }
+    }
+
+    private void SetupTrailRenderer()
+    {
+        dashTrail.time = trailTime;
+        dashTrail.startWidth = 0.5f;
+        dashTrail.endWidth = 0f;
+        dashTrail.sortingOrder = spriteRenderer.sortingOrder - 1;
+        
+        // Set trail color
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(
+            new GradientColorKey[] { 
+                new GradientColorKey(Color.white, 0.0f), 
+                new GradientColorKey(Color.white, 1.0f) 
+            },
+            new GradientAlphaKey[] { 
+                new GradientAlphaKey(0.5f, 0.0f), 
+                new GradientAlphaKey(0f, 1.0f) 
+            }
+        );
+        dashTrail.colorGradient = gradient;
+        
+        // Set trail material
+        dashTrail.material = new Material(Shader.Find("Sprites/Default"));
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        
+        if (canMove && canDash && !isDashing && target)
+        {
+            StartCoroutine(Dash());
+        }
+    }
+
     private void InitializeComponents()
     {
         // Add TrailRenderer if it doesn't exist
@@ -47,57 +89,13 @@ public class DashingEnemy : BaseEnemy
         dashTrail.enabled = false;
     }
 
-    private void SetupTrailRenderer()
-    {
-        dashTrail.time = trailTime;
-        dashTrail.startWidth = 0.5f;
-        dashTrail.endWidth = 0f;
-        dashTrail.sortingOrder = spriteRenderer.sortingOrder - 1;
-    }
-
-    protected override void Update()
-    {
-    base.Update();
-    
-    if (target && !isDashing)
-    {
-        // Calculate direction to target
-        Vector2 direction = (target.position - transform.position).normalized;
-        
-        // Update sprite orientation (inverted from before)
-        if (direction.x != 0)
-        {
-            transform.localScale = new Vector3(
-                -Mathf.Abs(transform.localScale.x) * Mathf.Sign(direction.x),
-                transform.localScale.y,
-                transform.localScale.z
-            );
-        }
-    }
-
-        if (canMove && canDash && !isDashing)
-        {
-            StartCoroutine(Dash());
-        }
-    }
-
     private IEnumerator Dash()
     {
         isDashing = true;
         canDash = false;
-
-        // Check for obstacles in dash direction
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDirection, dashSpeed * dashDuration, obstacleLayer);
-        
-        if (hit.collider != null)
-        {
-            // Calculate reflection direction
-            Vector2 dashDirection = Vector2.Reflect(moveDirection, hit.normal);
-            moveDirection = dashDirection;
-        }
-
         float originalSpeed = moveSpeed;
         moveSpeed = dashSpeed;
+
         dashTrail.enabled = true;
         if (dashSound) dashSound.Play();
 

@@ -116763,7 +116763,7 @@ MonoBehaviour:
   - waveName: Basic Stuff
     noOfEnemies: 5
     typeOfEnemies:
-    - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
+    - {fileID: 2130760986725788217, guid: cff6b37a04aa257499f3fb24e930ef11, type: 3}
     spawnInterval: 2
   - waveName: Seatwork
     noOfEnemies: 5

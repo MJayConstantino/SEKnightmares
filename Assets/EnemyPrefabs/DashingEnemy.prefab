@@ -321,17 +321,9 @@ MonoBehaviour:
   spawnSound: {fileID: 73503963497183434}
   hurtSound: {fileID: 6850109006984573071}
   deathSound: {fileID: 3890953002594592358}
-  stuckCheckInterval: 0.5
-  stuckThreshold: 0.1
-  unstuckForce: 5
-  obstacleDetectionRange: 1
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  isStuck: 0
   dashSpeed: 15
   dashDuration: 0.5
-  dashCooldown: 3
+  dashCooldown: 6
   dashSound: {fileID: 9052433838611826161}
   dashTrail: {fileID: -449966994070909260}
   trailTime: 1
