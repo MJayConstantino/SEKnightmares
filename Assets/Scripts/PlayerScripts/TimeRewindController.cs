@@ -25,6 +25,13 @@ public class TimeRewindController : MonoBehaviour
     [SerializeField] private int trailSegments = 10;            // Number of segments to display in the trail
     [SerializeField] private float trailFadeWidth = 0.05f;      // Width at the end of the trail (for fading effect)
     [SerializeField] private Color trailEndColor = new Color(0, 0.7f, 1f, 0.1f); // Color at the end of the trail
+
+    [Header("Ghost Settings")]
+    [SerializeField] private Color ghostColor = new Color(0, 0.7f, 1f, 0.5f); // Blue transparent color
+    [SerializeField] private float ghostScale = 1f;
+    private GameObject ghostObject;
+    private SpriteRenderer ghostRenderer;
+    private Animator ghostAnimator;
     
     // Components
     private PlayerMovement playerMovement;
@@ -134,7 +141,7 @@ public class TimeRewindController : MonoBehaviour
         trailRenderer.endColor = trailEndColor;
         trailRenderer.sortingLayerName = spriteRenderer.sortingLayerName;
         trailRenderer.sortingOrder = spriteRenderer.sortingOrder - 2; // Behind both the player and preview
-        
+
         // Set up a gradient for the trail to fade out
         Gradient gradient = new Gradient();
         gradient.SetKeys(
@@ -142,12 +149,13 @@ public class TimeRewindController : MonoBehaviour
             new GradientAlphaKey[] { new GradientAlphaKey(trailColor.a, 0.0f), new GradientAlphaKey(trailEndColor.a, 1.0f) }
         );
         trailRenderer.colorGradient = gradient;
-        
+
         // Initialize all points to the current position
         for (int i = 0; i < trailRenderer.positionCount; i++)
         {
             trailRenderer.SetPosition(i, transform.position);
         }
+        CreateGhostObject();
     }
 
     private void Update()
@@ -253,20 +261,43 @@ public class TimeRewindController : MonoBehaviour
         }
     }
 
+    private void CreateGhostObject()
+    {
+        ghostObject = new GameObject("TimeGhost");
+        ghostRenderer = ghostObject.AddComponent<SpriteRenderer>();
+        
+        // Copy sprite properties from player
+        ghostRenderer.sprite = spriteRenderer.sprite;
+        ghostRenderer.sortingLayerName = spriteRenderer.sortingLayerName;
+        ghostRenderer.sortingOrder = spriteRenderer.sortingOrder - 1;
+        ghostRenderer.color = ghostColor;
+        
+        // Set initial scale
+        ghostObject.transform.localScale = transform.localScale * ghostScale;
+
+        // Add animator if player has one
+        if (playerAnimator != null)
+        {
+            ghostAnimator = ghostObject.AddComponent<Animator>();
+            ghostAnimator.runtimeAnimatorController = playerAnimator.runtimeAnimatorController;
+            ghostAnimator.avatar = playerAnimator.avatar;
+        }
+    }
+
     private void UpdateTrail()
     {
         // Set the first point to the player's current position
         trailRenderer.SetPosition(0, transform.position);
-        
+
         // Get the ending position (preview position)
         Vector2 endPosition = previewObject.transform.position;
-        
+
         // Calculate evenly spaced points between the player and preview
         int numPoints = trailSegments + 1; // Including player's position
-        
+
         // Find appropriate snapshots for the trail
         List<PlayerStateSnapshot> trailSnapshots = GetTrailSnapshots(numPoints);
-        
+
         // Update trail positions based on the snapshots
         for (int i = 0; i < numPoints; i++)
         {
@@ -282,6 +313,7 @@ public class TimeRewindController : MonoBehaviour
                 trailRenderer.SetPosition(i, position);
             }
         }
+        UpdateGhost(trailSnapshots);
     }
     
     private List<PlayerStateSnapshot> GetTrailSnapshots(int numPoints)
@@ -396,19 +428,65 @@ public class TimeRewindController : MonoBehaviour
         // End rewind
         StopRewind();
     }
+    
+    private void UpdateGhost(List<PlayerStateSnapshot> snapshots)
+    {
+        if (ghostObject == null || snapshots.Count == 0) return;
+
+        // Position ghost at the last recorded position
+        PlayerStateSnapshot lastSnapshot = snapshots[snapshots.Count - 1];
+        ghostObject.transform.position = lastSnapshot.Position;
+
+        // Match player's sprite direction
+        ghostObject.transform.localScale = new Vector3(
+            Mathf.Abs(transform.localScale.x) * (spriteRenderer.flipX ? -1 : 1) * ghostScale,
+            transform.localScale.y * ghostScale,
+            transform.localScale.z * ghostScale
+        );
+
+        // Update ghost animation if it exists
+        if (ghostAnimator != null && playerAnimator != null)
+        {
+            // Copy current animation state
+            AnimatorStateInfo stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
+            ghostAnimator.Play(stateInfo.fullPathHash, 0, stateInfo.normalizedTime);
+
+            // Copy animation parameters
+            foreach (AnimatorControllerParameter param in playerAnimator.parameters)
+            {
+                switch (param.type)
+                {
+                    case AnimatorControllerParameterType.Bool:
+                        ghostAnimator.SetBool(param.name, playerAnimator.GetBool(param.name));
+                        break;
+                    case AnimatorControllerParameterType.Float:
+                        ghostAnimator.SetFloat(param.name, playerAnimator.GetFloat(param.name));
+                        break;
+                    case AnimatorControllerParameterType.Int:
+                        ghostAnimator.SetInteger(param.name, playerAnimator.GetInteger(param.name));
+                        break;
+                }
+            }
+        }
+    }
 
     private void StopRewind()
     {
         isRewinding = false;
-        
+
+        if (ghostObject != null)
+        {
+            ghostObject.SetActive(false);
+        }
+
         // Re-enable player movement
         playerMovement.enabled = true;
         rb.isKinematic = false;
-        
+
         // Reset visual effect
         if (useVisualEffect)
             spriteRenderer.color = originalColor;
-        
+
         // Start cooldown
         StartCoroutine(RewindCooldown());
     }
@@ -419,10 +497,14 @@ public class TimeRewindController : MonoBehaviour
         canRewind = true;
         previewObject.SetActive(true);
         
-        // Re-enable trail
         if (trailRenderer != null)
         {
             trailRenderer.enabled = true;
+        }
+        
+        if (ghostObject != null)
+        {
+            ghostObject.SetActive(true);
         }
     }
 
@@ -431,6 +513,11 @@ public class TimeRewindController : MonoBehaviour
         if (previewObject != null)
         {
             Destroy(previewObject);
+        }
+        
+        if (ghostObject != null)
+        {
+            Destroy(ghostObject);
         }
     }
 }
