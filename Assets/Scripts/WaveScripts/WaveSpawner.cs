@@ -14,7 +14,6 @@ public class WaveSpawner : MonoBehaviour
     public Animator animator;
     public Animator transition;
     public TMP_Text waveName;
-    public TMP_Text enemiesLeft;
     private Wave currentWave;
     private int currentWaveNumber;
     private float nextSpawnTime;
@@ -24,6 +23,10 @@ public class WaveSpawner : MonoBehaviour
     public Tilemap objectTilemap, objectMapTilemap;
 
     public List<UnityEngine.Rendering.Universal.Light2D> lightsToTurnOff;
+
+    [Header("UI Elements")]
+    [SerializeField] private TMP_Text enemyCountText;
+    [SerializeField] private string enemyCountPrefix = "Enemies Left: ";
 
 
     private void Start()
@@ -42,6 +45,19 @@ public class WaveSpawner : MonoBehaviour
         currentWave = waves[currentWaveNumber];
         SpawnWave();
         GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemyCountText != null)
+        {
+            if (totalEnemies.Length > 0)
+            {
+                enemyCountText.text = $"{enemyCountPrefix}{totalEnemies.Length}";
+                enemyCountText.gameObject.SetActive(true);
+            }
+            else
+            {
+                enemyCountText.gameObject.SetActive(false);
+            }
+        }
+
         if (totalEnemies.Length == 0)
         {
             if (currentWaveNumber + 1 != waves.Length)
