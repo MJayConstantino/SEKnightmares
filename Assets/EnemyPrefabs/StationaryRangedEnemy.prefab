@@ -362,6 +362,8 @@ MonoBehaviour:
   spawnSound: {fileID: 9124575580006113079}
   hurtSound: {fileID: 9124575580006113079}
   deathSound: {fileID: 9124575580006113079}
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  hitFlashDuration: 0.1
   firePoint: {fileID: 5124167304533928184}
   bulletPrefab: {fileID: 4553563639554728257, guid: ca3f0fd53cd3ed9469a01454e06911e0, type: 3}
   timeBetweenShots: 2

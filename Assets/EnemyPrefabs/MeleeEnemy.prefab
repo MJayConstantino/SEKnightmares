@@ -362,6 +362,8 @@ MonoBehaviour:
   spawnSound: {fileID: 7220997750688311287}
   hurtSound: {fileID: 7220997750688311287}
   deathSound: {fileID: 7220997750688311287}
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  hitFlashDuration: 0.1
   walkSound: {fileID: 7220997750688311287}
 --- !u!82 &7220997750688311287
 AudioSource:
@@ -375,13 +377,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 69b109498c7052b4991f08dbd9a47e17, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 95
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -471,13 +473,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 000ea6d57bfac754dae36757b8692ad7, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 185
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -663,13 +665,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 0bdbffea468b4e646aa64c13ced790a9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.6
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 162
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

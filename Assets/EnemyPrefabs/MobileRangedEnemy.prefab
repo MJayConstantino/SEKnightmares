@@ -197,20 +197,12 @@ MonoBehaviour:
   spawnSound: {fileID: 8066060201094417684}
   hurtSound: {fileID: 8066060201094417684}
   deathSound: {fileID: 8066060201094417684}
-  stuckCheckInterval: 0.5
-  stuckThreshold: 0.1
-  unstuckForce: 5
-  obstacleDetectionRange: 1
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  isStuck: 0
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  hitFlashDuration: 0.1
   firePoint: {fileID: 7890148971624200534}
   bulletPrefab: {fileID: 3215411049568478856, guid: 8091e53221f6722468fec8a0d90168a7, type: 3}
   timeBetweenShots: 2
   attackSound: {fileID: 8066060201094417684}
-  preferredRange: 5
-  rangeTolerance: 1
   dragonFly: {fileID: 8066060201094417684}
 --- !u!58 &2930675417205044745
 CircleCollider2D:

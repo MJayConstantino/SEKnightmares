@@ -42,3 +42,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3188175367
+    locked: 0
+  - name: Enemies
+    uniqueID: 4025198625
+    locked: 0
+  - name: Projectiles
+    uniqueID: 2961094481
+    locked: 0
+  - name: UI
+    uniqueID: 2206989167
+    locked: 0

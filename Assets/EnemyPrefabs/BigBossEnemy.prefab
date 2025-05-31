@@ -2556,14 +2556,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c41d1c22b77ec94fad83ff04b58f118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2000
-  maxHealth: 2000
+  health: 100000
+  maxHealth: 100000
   moveSpeed: 0
   experienceValue: 100
   damageAmount: 20
   spawnSound: {fileID: 846323807169817867}
   hurtSound: {fileID: 846323807169817867}
   deathSound: {fileID: 846323807169817867}
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  hitFlashDuration: 0.1
   firePoint: {fileID: 3504244760131495894}
   bulletPrefab: {fileID: 1750530348727430944, guid: 0d8e65a354a8dc540a04921cc33892e1, type: 3}
   timeBetweenShots: 2
