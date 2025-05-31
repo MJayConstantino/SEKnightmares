@@ -24,6 +24,12 @@ public abstract class BaseEnemy : MonoBehaviour
     [SerializeField] protected AudioSource hurtSound;
     [SerializeField] protected AudioSource deathSound;
 
+    [Header("Hit Effect")]
+    [SerializeField] protected Color hitColor = Color.red;
+    [SerializeField] protected float hitFlashDuration = 0.1f;
+    protected Color originalColor;
+    protected bool isFlashing = false;
+
     protected bool canMove = false;
 
     protected virtual void Awake()
@@ -32,6 +38,7 @@ public abstract class BaseEnemy : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         healthBar = GetComponentInChildren<EnemyHealthBar>();
         dissolveEffect = GetComponent<Dissolve>();
+        originalColor = spriteRenderer.color;
     }
 
     protected virtual void Start()
@@ -100,6 +107,11 @@ public abstract class BaseEnemy : MonoBehaviour
         
         if (hurtSound) hurtSound.Play();
 
+        if (!isFlashing)
+        {
+            StartCoroutine(HitFlashRoutine());
+        }
+
         if (health <= 0)
         {
             Die();
@@ -111,7 +123,28 @@ public abstract class BaseEnemy : MonoBehaviour
         if (deathSound) deathSound.Play();
         dissolveEffect?.Vanish();
         canMove = false;
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = originalColor;
+        }
         StartCoroutine(DestroyAfterDelay(0.75f));
+    }
+
+    protected virtual IEnumerator HitFlashRoutine()
+    {
+        isFlashing = true;
+
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = hitColor;
+            
+            yield return new WaitForSeconds(hitFlashDuration);
+            
+            // Return to original color
+            spriteRenderer.color = originalColor;
+        }
+
+        isFlashing = false;
     }
 
     protected virtual IEnumerator EnableMovementAfterSpawn()
