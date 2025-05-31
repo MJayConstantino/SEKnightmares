@@ -7,8 +7,8 @@ public class TimeRewindController : MonoBehaviour
     [Header("Rewind Settings")]
     [SerializeField] private float maxRewindTime = 5f;          // Maximum time to rewind (in seconds)
     [SerializeField] private float recordFrequency = 0.1f;      // How often to record state (in seconds)
-    [SerializeField] private float rewindCooldown = 10f;        // Cooldown before rewinding again
-    [SerializeField] private KeyCode rewindKey = KeyCode.R;     // Key to press for rewind
+    [SerializeField] public float rewindCooldown = 10f;        // Cooldown before rewinding again
+    [SerializeField] public KeyCode rewindKey = KeyCode.R;     // Key to press for rewind
     [SerializeField] private AudioSource rewindSoundEffect;     // Optional sound effect
 
     [Header("Visual Effects")]
@@ -63,6 +63,11 @@ public class TimeRewindController : MonoBehaviour
     private bool canRewind = true;
     private Color originalColor;
 
+    [SerializeField] private float _rewindCooldown = 10f;
+
+    public bool CanRewind => canRewind;
+    public float RewindCooldownRemaining { get; private set; }
+
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
@@ -70,22 +75,22 @@ public class TimeRewindController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
-        
+
         // Calculate buffer size based on max rewind time and recording frequency
         bufferSize = Mathf.CeilToInt(maxRewindTime / recordFrequency) + 1;
         stateBuffer = new PlayerStateSnapshot[bufferSize];
-        
+
         // Initialize the buffer with current state
         for (int i = 0; i < bufferSize; i++)
         {
             stateBuffer[i] = new PlayerStateSnapshot(transform.position, playerHealth.CurrentHealth, Time.time);
         }
-        
+
         originalColor = spriteRenderer.color;
-        
+
         // Create preview object
         CreatePreviewObject();
-        
+
         // Create trail if enabled
         if (showTrail)
         {
@@ -194,9 +199,36 @@ public class TimeRewindController : MonoBehaviour
             }
         }
 
+        if (!canRewind)
+        {
+            RewindCooldownRemaining -= Time.deltaTime;
+            if (RewindCooldownRemaining <= 0)
+            {
+                RewindCooldownRemaining = 0;
+            }
+        }
+
         if (isRewinding)
         {
             RewindTime();
+        }
+    }
+    
+    private IEnumerator RewindCooldown()
+    {
+        RewindCooldownRemaining = _rewindCooldown;
+        yield return new WaitForSeconds(_rewindCooldown);
+        canRewind = true;
+        previewObject.SetActive(true);
+        
+        if (trailRenderer != null)
+        {
+            trailRenderer.enabled = true;
+        }
+        
+        if (ghostObject != null)
+        {
+            ghostObject.SetActive(true);
         }
     }
 
@@ -206,11 +238,11 @@ public class TimeRewindController : MonoBehaviour
         float targetTime = Time.time - maxRewindTime;
         int targetIndex = currentIndex;
         float closestTimeDiff = float.MaxValue;
-        
+
         for (int i = 0; i < bufferSize; i++)
         {
             if (stateBuffer[i] == null) continue;
-            
+
             float timeDiff = Mathf.Abs(stateBuffer[i].TimeStamp - targetTime);
             if (timeDiff < closestTimeDiff)
             {
@@ -218,13 +250,13 @@ public class TimeRewindController : MonoBehaviour
                 targetIndex = i;
             }
         }
-        
+
         // Update preview position
         if (stateBuffer[targetIndex] != null)
         {
             previewObject.transform.position = stateBuffer[targetIndex].Position;
         }
-        
+
         // Copy properties from the player to the preview
         UpdatePreviewAppearance();
     }
@@ -513,23 +545,6 @@ public class TimeRewindController : MonoBehaviour
 
         // Start cooldown
         StartCoroutine(RewindCooldown());
-    }
-
-    private IEnumerator RewindCooldown()
-    {
-        yield return new WaitForSeconds(rewindCooldown);
-        canRewind = true;
-        previewObject.SetActive(true);
-        
-        if (trailRenderer != null)
-        {
-            trailRenderer.enabled = true;
-        }
-        
-        if (ghostObject != null)
-        {
-            ghostObject.SetActive(true);
-        }
     }
 
     private void OnDestroy()

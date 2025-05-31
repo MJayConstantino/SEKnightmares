@@ -14,13 +14,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private InputActionReference dash;
 
     [Header("Dash Settings")]
-    [SerializeField] private float dashSpeed = 10f;
+    [SerializeField] private float dashSpeed = 15f;
     [SerializeField] private float dashDuration = 1f;
-    [SerializeField] private float dashCooldown = 3f;
+    [SerializeField] private float _dashCooldown = 5f;
 
     private Vector2 moveDirection;
     private bool isDashing;
-    private bool canDash = true;
+
+    public float DashCooldownRemaining { get; private set; }
+    public float dashCooldown => _dashCooldown;
+    public bool canDash { get; private set; } = true;
 
     private void Awake()
     {
@@ -34,6 +37,29 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleDashInput();
         }
+
+        if (!canDash)
+        {
+            DashCooldownRemaining -= Time.deltaTime;
+            if (DashCooldownRemaining <= 0)
+            {
+                canDash = true;
+                DashCooldownRemaining = 0;
+            }
+        }
+    }
+
+    private IEnumerator DashRoutine()
+    {
+        canDash = false;
+        isDashing = true;
+        DashCooldownRemaining = _dashCooldown;
+        
+        if (dashingSound) dashingSound.Play();
+        rb.velocity = moveDirection.normalized * dashSpeed;
+        
+        yield return new WaitForSeconds(dashDuration);
+        isDashing = false;
     }
 
     private void FixedUpdate()
@@ -59,20 +85,5 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(DashRoutine());
         }
-    }
-
-    private IEnumerator DashRoutine()
-    {
-        canDash = false;
-        isDashing = true;
-        
-        if (dashingSound) dashingSound.Play();
-        rb.velocity = moveDirection.normalized * dashSpeed;
-        
-        yield return new WaitForSeconds(dashDuration);
-        isDashing = false;
-
-        yield return new WaitForSeconds(dashCooldown);
-        canDash = true;
     }
 }
