@@ -189,11 +189,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d988275b6bcef41890f7de43fb2658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 20
-  maxHealth: 30
-  moveSpeed: 0
-  experienceValue: 5
-  damageAmount: 5
+  health: 25
+  maxHealth: 25
+  moveSpeed: 2
+  experienceValue: 2
+  damageAmount: 10
   spawnSound: {fileID: 8066060201094417684}
   hurtSound: {fileID: 8066060201094417684}
   deathSound: {fileID: 8066060201094417684}

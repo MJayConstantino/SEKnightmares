@@ -357,8 +357,8 @@ MonoBehaviour:
   health: 25
   maxHealth: 25
   moveSpeed: 0
-  experienceValue: 1
-  damageAmount: 7
+  experienceValue: 4
+  damageAmount: 20
   spawnSound: {fileID: 9124575580006113079}
   hurtSound: {fileID: 9124575580006113079}
   deathSound: {fileID: 9124575580006113079}
@@ -366,7 +366,7 @@ MonoBehaviour:
   hitFlashDuration: 0.1
   firePoint: {fileID: 5124167304533928184}
   bulletPrefab: {fileID: 4553563639554728257, guid: ca3f0fd53cd3ed9469a01454e06911e0, type: 3}
-  timeBetweenShots: 2
+  timeBetweenShots: 2.5
   attackSound: {fileID: 9124575580006113079}
   spawnBullet: {fileID: 3840719541451598605}
 --- !u!114 &3840719541451598605
@@ -383,7 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 4553563639554728257, guid: ca3f0fd53cd3ed9469a01454e06911e0, type: 3}
   firePoint: {fileID: 5124167304533928184}
-  fireForce: 45
+  fireForce: 50
 --- !u!70 &5192150228271594141
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -9,10 +9,6 @@ public class MeleeEnemy : BaseEnemy
 
     protected override void Start()
     {
-        experienceValue = 1;
-        moveSpeed = 2f;
-        maxHealth = 10f;
-        damageAmount = 1;
         base.Start();
     }
 

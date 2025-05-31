@@ -7,13 +7,6 @@ public class StationaryRangedEnemy : RangedEnemy
 
     protected override void Start()
     {
-        // Initialize base stats
-        experienceValue = 1;
-        moveSpeed = 0f; // Stationary enemy doesn't move
-        maxHealth = 10f;
-        damageAmount = 2;
-        timeBetweenShots = 2f;
-        
         base.Start();
     }
 

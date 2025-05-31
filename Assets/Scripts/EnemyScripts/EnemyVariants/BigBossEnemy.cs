@@ -7,18 +7,11 @@ public class BigBossEnemy : BossEnemy
     [SerializeField] private Collider2D bossCollider;
     [SerializeField] private float attackInterval = 2f;
     private float nextAttackTime;
-
+    
     protected override void Start()
     {
-        // Set base stats
-        experienceValue = 25;
-        moveSpeed = 0f;
-        maxHealth = 100f;
-        damageAmount = 2;
-        health = maxHealth;
-        
         base.Start();
-        
+
         if (!bossAttack || !bossCollider)
         {
             Debug.LogError($"Missing required components on {gameObject.name}");
@@ -28,6 +21,42 @@ public class BigBossEnemy : BossEnemy
 
         // Initialize attack timing
         nextAttackTime = Time.time + attackInterval;
+        
+        if (healthBar)
+        {
+            healthBar.UpdateHealthBar(health, maxHealth);
+        }
+    }
+
+    public override void TakeDamage(float damageAmount)
+    {
+        base.TakeDamage(damageAmount);
+        
+        // Double check health bar update
+        if (healthBar)
+        {
+            healthBar.UpdateHealthBar(health, maxHealth);
+        }
+
+        // Debug log to verify damage
+        Debug.Log($"Boss took {damageAmount} damage. Current health: {health}/{maxHealth}");
+    }
+
+    protected override void EnterSecondPhase()
+    {
+        if (isSecondPhase) return;
+        
+        base.EnterSecondPhase();
+        
+        // Optionally heal a bit when entering second phase
+        health = Mathf.Min(health + (maxHealth * 0.1f), maxHealth);
+        healthBar?.UpdateHealthBar(health, maxHealth);
+        
+        if (bossAttack)
+        {
+            bossAttack.SetPhaseTwo();
+            attackInterval *= 0.75f;
+        }
     }
 
     protected override void Update()
@@ -58,18 +87,5 @@ public class BigBossEnemy : BossEnemy
         if (bossAttack) Destroy(bossAttack);
         
         base.Die();
-    }
-
-    protected override void EnterSecondPhase()
-    {
-        if (isSecondPhase) return;
-        
-        base.EnterSecondPhase();
-        if (bossAttack)
-        {
-            bossAttack.SetPhaseTwo();
-            // Optionally increase attack frequency in phase 2
-            attackInterval *= 0.75f;
-        }
     }
 }

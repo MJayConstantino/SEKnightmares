@@ -16,10 +16,6 @@ public class DashingEnemy : BaseEnemy
      protected override void Start()
     {
         base.Start();
-        experienceValue = 1;
-        moveSpeed = 2f;
-        maxHealth = 15f;
-        damageAmount = 5;
         
         StartCoroutine(EnableDashAfterDelay());
     }

@@ -9,10 +9,6 @@ public class MobileRangedEnemy : RangedEnemy
 
     protected override void Start()
     {
-        experienceValue = 1;
-        moveSpeed = 2f;
-        maxHealth = 10f;
-        damageAmount = 2;
         base.Start();
     }
 
