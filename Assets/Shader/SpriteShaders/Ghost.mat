@@ -59,7 +59,7 @@ Material:
     - _NoiseAmount: 0
     - _OutlineThickness: 0.1
     - _SpiralStrength: 8.8
-    - _VerticalDissolve: 1.062193
+    - _VerticalDissolve: 1.0803246
     m_Colors:
     - _OutlineColor: {r: 0.2086369, g: 0.70837605, b: 0.89626956, a: 1}
   m_BuildTextureStacks: []
