@@ -17,6 +17,16 @@ public class StationaryRangedEnemy : RangedEnemy
         base.Start();
     }
 
+    protected override void UpdateSpriteDirection()
+    {
+        if (target != null)
+        {
+            // Flip based on target direction since this enemy doesn't move
+            Vector2 directionToTarget = (target.position - transform.position).normalized;
+            spriteRenderer.flipX = directionToTarget.x > 0;
+        }
+    }
+
     protected override void Fire()
     {
         if (spawnBullet && canMove)

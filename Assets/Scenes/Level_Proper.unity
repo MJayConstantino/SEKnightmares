@@ -117413,7 +117413,8 @@ MonoBehaviour:
   - waveName: Basic Stuff
     noOfEnemies: 5
     typeOfEnemies:
-    - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
+    - {fileID: 4590400654008043599, guid: a29de964efcd637469200344e3436629, type: 3}
+    - {fileID: 2130760986725788217, guid: cff6b37a04aa257499f3fb24e930ef11, type: 3}
     spawnInterval: 2
   - waveName: Seatwork
     noOfEnemies: 5
@@ -117997,7 +117998,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 7.7212296, y: -7.0468903}
+  m_Offset: {x: 8.4603405, y: -6.492557}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -118008,7 +118009,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 12.887524, y: 15.777279}
+  m_Size: {x: 9.191971, y: 9.494834}
   m_EdgeRadius: 0
 --- !u!114 &1043083188
 MonoBehaviour:
@@ -118307,11 +118308,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1940529081}
-  - {fileID: 532459503}
   - {fileID: 1888822078}
   - {fileID: 1589779305}
   - {fileID: 682418582}
   - {fileID: 952005331}
+  - {fileID: 532459503}
   - {fileID: 1562003915}
   - {fileID: 1863542486}
   - {fileID: 1227468295}

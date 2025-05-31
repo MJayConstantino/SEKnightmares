@@ -8,10 +8,7 @@ public class DashingEnemy : BaseEnemy
     [SerializeField] private float dashDuration = 0.5f;
     [SerializeField] private float dashCooldown = 6f;
     [SerializeField] private AudioSource dashSound;
-    
-    [Header("Trail Settings")]
     [SerializeField] private TrailRenderer dashTrail;
-    [SerializeField] private float trailTime = 0.5f;
     
     private bool canDash = false;
     private bool isDashing = false;
@@ -24,7 +21,6 @@ public class DashingEnemy : BaseEnemy
         maxHealth = 15f;
         damageAmount = 5;
         
-        InitializeComponents();
         StartCoroutine(EnableDashAfterDelay());
     }
 
@@ -33,37 +29,14 @@ public class DashingEnemy : BaseEnemy
         // Override the base sprite direction logic
         if (moveDirection.x != 0)
         {
-            transform.localScale = new Vector3(
-                Mathf.Abs(transform.localScale.x) * (moveDirection.x > 0 ? 1 : -1),
-                transform.localScale.y,
-                transform.localScale.z
-            );
+            // working last time- commented out for testing
+            // transform.localScale = new Vector3(
+            //     Mathf.Abs(transform.localScale.x) * (moveDirection.x > 0 ? 1 : -1),
+            //     transform.localScale.y,
+            //     transform.localScale.z
+            // );
+            spriteRenderer.flipX = moveDirection.x > 0;
         }
-    }
-
-    private void SetupTrailRenderer()
-    {
-        dashTrail.time = trailTime;
-        dashTrail.startWidth = 0.5f;
-        dashTrail.endWidth = 0f;
-        dashTrail.sortingOrder = spriteRenderer.sortingOrder - 1;
-        
-        // Set trail color
-        Gradient gradient = new Gradient();
-        gradient.SetKeys(
-            new GradientColorKey[] { 
-                new GradientColorKey(Color.white, 0.0f), 
-                new GradientColorKey(Color.white, 1.0f) 
-            },
-            new GradientAlphaKey[] { 
-                new GradientAlphaKey(0.5f, 0.0f), 
-                new GradientAlphaKey(0f, 1.0f) 
-            }
-        );
-        dashTrail.colorGradient = gradient;
-        
-        // Set trail material
-        dashTrail.material = new Material(Shader.Find("Sprites/Default"));
     }
 
     protected override void Update()
@@ -74,19 +47,6 @@ public class DashingEnemy : BaseEnemy
         {
             StartCoroutine(Dash());
         }
-    }
-
-    private void InitializeComponents()
-    {
-        // Add TrailRenderer if it doesn't exist
-        if (!dashTrail)
-        {
-            dashTrail = gameObject.AddComponent<TrailRenderer>();
-            SetupTrailRenderer();
-        }
-        
-        // Initially disable the trail
-        dashTrail.enabled = false;
     }
 
     private IEnumerator Dash()
