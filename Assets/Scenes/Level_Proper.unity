@@ -52624,6 +52624,101 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 186137125}
   m_CullTransparentMesh: 1
+--- !u!1 &193728108
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 193728109}
+  - component: {fileID: 193728113}
+  - component: {fileID: 193728112}
+  - component: {fileID: 193728111}
+  m_Layer: 0
+  m_Name: cm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &193728109
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193728108}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 218865375}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &193728111
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193728108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BindingMode: 1
+  m_FollowOffset: {x: 0, y: 0, z: -10}
+  m_XDamping: 1
+  m_YDamping: 1
+  m_ZDamping: 1
+  m_AngularDampingMode: 0
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
+  m_AngularDamping: 0
+--- !u!114 &193728112
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193728108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
+  m_LookaheadTime: 0
+  m_LookaheadSmoothing: 0
+  m_LookaheadIgnoreY: 0
+  m_HorizontalDamping: 0.5
+  m_VerticalDamping: 0.5
+  m_ScreenX: 0.5
+  m_ScreenY: 0.5
+  m_DeadZoneWidth: 0
+  m_DeadZoneHeight: 0
+  m_SoftZoneWidth: 0.8
+  m_SoftZoneHeight: 0.8
+  m_BiasX: 0
+  m_BiasY: 0
+  m_CenterOnActivate: 1
+--- !u!114 &193728113
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193728108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &196838672
 GameObject:
   m_ObjectHideFlags: 0
@@ -52786,6 +52881,78 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &218865373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 218865375}
+  - component: {fileID: 218865374}
+  m_Layer: 0
+  m_Name: Boss Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &218865374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218865373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ExcludedPropertiesInInspector:
+  - m_Script
+  m_LockStageInInspector: 
+  m_StreamingVersion: 20170927
+  m_Priority: 10
+  m_StandbyUpdate: 2
+  m_LookAt: {fileID: 0}
+  m_Follow: {fileID: 0}
+  m_Lens:
+    FieldOfView: 60
+    OrthographicSize: 21
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    LensShift: {x: 0, y: 0}
+    GateFit: 2
+    FocusDistance: 10
+    m_SensorSize: {x: 1, y: 1}
+  m_Transitions:
+    m_BlendHint: 0
+    m_InheritPosition: 0
+    m_OnCameraLive:
+      m_PersistentCalls:
+        m_Calls: []
+  m_LegacyBlendHint: 0
+  m_ComponentOwner: {fileID: 193728109}
+--- !u!4 &218865375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218865373}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 33.3, y: 0.5, z: -637.84735}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 193728109}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &234233164
 GameObject:
   m_ObjectHideFlags: 0
@@ -117287,7 +117454,7 @@ MonoBehaviour:
     typeOfEnemies:
     - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
     spawnInterval: 2
-  - waveName: Laboratory
+  - waveName: Lab Activity
     noOfEnemies: 5
     typeOfEnemies:
     - {fileID: 2130760986725788217, guid: cff6b37a04aa257499f3fb24e930ef11, type: 3}
@@ -117297,17 +117464,10 @@ MonoBehaviour:
     typeOfEnemies:
     - {fileID: 4590400654008043599, guid: a29de964efcd637469200344e3436629, type: 3}
     spawnInterval: 2
-  - waveName: Pending Requirements
-    noOfEnemies: 10
-    typeOfEnemies:
-    - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
-    - {fileID: 2130760986725788217, guid: cff6b37a04aa257499f3fb24e930ef11, type: 3}
-    spawnInterval: 2
   - waveName: Prelims
     noOfEnemies: 10
     typeOfEnemies:
     - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
-    - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
     - {fileID: 2130760986725788217, guid: cff6b37a04aa257499f3fb24e930ef11, type: 3}
     spawnInterval: 2
   - waveName: Midterms
@@ -117316,23 +117476,22 @@ MonoBehaviour:
     - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
     - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
     - {fileID: 2130760986725788217, guid: cff6b37a04aa257499f3fb24e930ef11, type: 3}
+    spawnInterval: 2
+  - waveName: Hell Week
+    noOfEnemies: 20
+    typeOfEnemies:
+    - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
     - {fileID: 4590400654008043599, guid: a29de964efcd637469200344e3436629, type: 3}
     spawnInterval: 3
   - waveName: Finals
-    noOfEnemies: 25
-    typeOfEnemies:
-    - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
-    - {fileID: 4590400654008043599, guid: a29de964efcd637469200344e3436629, type: 3}
-    spawnInterval: 3
-  - waveName: All together now..
     noOfEnemies: 30
     typeOfEnemies:
     - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
+    - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
     - {fileID: 2130760986725788217, guid: cff6b37a04aa257499f3fb24e930ef11, type: 3}
     - {fileID: 4590400654008043599, guid: a29de964efcd637469200344e3436629, type: 3}
-    - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
-    spawnInterval: 4
-  - waveName: Final DEFENSE
+    spawnInterval: 2.5
+  - waveName: Final Defense
     noOfEnemies: 1
     typeOfEnemies:
     - {fileID: 5709911963717865507, guid: f42f6b145d2de23478503ce392276dbd, type: 3}
@@ -117373,6 +117532,7 @@ MonoBehaviour:
   - {fileID: 1037424653}
   enemyCountText: {fileID: 2053294082}
   enemyCountPrefix: 'Enemies Left: '
+  cameraManager: {fileID: 1303895789}
 --- !u!95 &937594268
 Animator:
   serializedVersion: 5
@@ -118674,6 +118834,53 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1536540330}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1303895788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1303895790}
+  - component: {fileID: 1303895789}
+  m_Layer: 0
+  m_Name: CameraManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1303895789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303895788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec89fa5dff757644292a5fbb6003d5eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 1129797800}
+  bossCamera: {fileID: 218865374}
+  bossViewSize: 20
+--- !u!4 &1303895790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303895788}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 44.250313, y: 1.1468427, z: -574.4502}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1315546376
 GameObject:
@@ -146811,7 +147018,7 @@ MonoBehaviour:
   playerHealth: {fileID: 1460220619}
   healthText: {fileID: 2143998070}
   format: '{0}/{1}'
-  lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  lowHealthColor: {r: 0.8113208, g: 0.2693098, b: 0, a: 1}
   normalHealthColor: {r: 1, g: 1, b: 1, a: 1}
   lowHealthThreshold: 0.3
 --- !u!114 &2143998070
@@ -146917,6 +147124,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 910660691}
   - {fileID: 1129797801}
+  - {fileID: 218865375}
   - {fileID: 1378400653}
   - {fileID: 1460220613}
   - {fileID: 196838675}
@@ -146929,3 +147137,4 @@ SceneRoots:
   - {fileID: 582680863}
   - {fileID: 1146837998}
   - {fileID: 1210673649}
+  - {fileID: 1303895790}

@@ -2556,8 +2556,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c41d1c22b77ec94fad83ff04b58f118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10000
-  maxHealth: 10000
+  health: 2000
+  maxHealth: 2000
   moveSpeed: 0
   experienceValue: 100
   damageAmount: 50
@@ -2570,7 +2570,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1750530348727430944, guid: 0d8e65a354a8dc540a04921cc33892e1, type: 3}
   timeBetweenShots: 2
   attackSound: {fileID: 846323807169817867}
-  phaseTransitionSound: {fileID: 846323807169817867}
+  phaseTransitionSound: {fileID: 4882581939815784239}
   animator: {fileID: 6261735324344195136}
   healthBarCanvas: {fileID: 9068639224388452894}
   bossAttack: {fileID: 4612937191194168043}

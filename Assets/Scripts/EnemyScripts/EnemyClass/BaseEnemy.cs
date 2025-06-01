@@ -51,8 +51,8 @@ public abstract class BaseEnemy : MonoBehaviour
     protected virtual void Initialize()
     {
         health = maxHealth;
-        healthBar?.UpdateHealthBar(health, maxHealth);
-        dissolveEffect?.Appear();
+        healthBar.UpdateHealthBar(health, maxHealth);
+        dissolveEffect.Appear();
         if (spawnSound) spawnSound.Play();
     }
 
@@ -103,7 +103,7 @@ public abstract class BaseEnemy : MonoBehaviour
     public virtual void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
-        healthBar?.UpdateHealthBar(health, maxHealth);
+        healthBar.UpdateHealthBar(health, maxHealth);
         
         if (hurtSound) hurtSound.Play();
 
@@ -121,7 +121,7 @@ public abstract class BaseEnemy : MonoBehaviour
     protected virtual void Die()
     {
         if (deathSound) deathSound.Play();
-        dissolveEffect?.Vanish();
+        dissolveEffect.Vanish();
         canMove = false;
         if (spriteRenderer != null)
         {
@@ -137,10 +137,7 @@ public abstract class BaseEnemy : MonoBehaviour
         if (spriteRenderer != null)
         {
             spriteRenderer.color = hitColor;
-            
             yield return new WaitForSeconds(hitFlashDuration);
-            
-            // Return to original color
             spriteRenderer.color = originalColor;
         }
 

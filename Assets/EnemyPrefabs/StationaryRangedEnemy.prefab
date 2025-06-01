@@ -366,7 +366,7 @@ MonoBehaviour:
   hitFlashDuration: 0.1
   firePoint: {fileID: 5124167304533928184}
   bulletPrefab: {fileID: 4553563639554728257, guid: ca3f0fd53cd3ed9469a01454e06911e0, type: 3}
-  timeBetweenShots: 2.5
+  timeBetweenShots: 5
   attackSound: {fileID: 9124575580006113079}
   spawnBullet: {fileID: 3840719541451598605}
 --- !u!114 &3840719541451598605
@@ -383,7 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 4553563639554728257, guid: ca3f0fd53cd3ed9469a01454e06911e0, type: 3}
   firePoint: {fileID: 5124167304533928184}
-  fireForce: 50
+  fireForce: 65
 --- !u!70 &5192150228271594141
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

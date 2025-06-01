@@ -28,6 +28,9 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private TMP_Text enemyCountText;
     [SerializeField] private string enemyCountPrefix = "Enemies Left: ";
 
+    [Header("Boss Fight")]
+    [SerializeField] private CameraManager cameraManager;
+
 
     private void Start()
     {
@@ -90,6 +93,7 @@ public class WaveSpawner : MonoBehaviour
             Instantiate(randomEnemy, spawnPoint.position, Quaternion.identity);
             currentWave.noOfEnemies--;
             nextSpawnTime = Time.time + currentWave.spawnInterval;
+            
             if (currentWave.noOfEnemies == 0)
             {
                 canSpawn = false;
@@ -97,6 +101,7 @@ public class WaveSpawner : MonoBehaviour
 
                 if (currentWaveNumber == waves.Length - 1)
                 {
+                    cameraManager.SwitchToBossCamera();
                     PlayBossMusic();
                     objectTilemap.gameObject.SetActive(false);
                     objectMapTilemap.gameObject.SetActive(false);

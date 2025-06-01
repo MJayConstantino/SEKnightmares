@@ -19,7 +19,6 @@ public class BigBossEnemy : BossEnemy
             return;
         }
 
-        // Initialize attack timing
         nextAttackTime = Time.time + attackInterval;
         
         if (healthBar)
@@ -31,15 +30,10 @@ public class BigBossEnemy : BossEnemy
     public override void TakeDamage(float damageAmount)
     {
         base.TakeDamage(damageAmount);
-        
-        // Double check health bar update
         if (healthBar)
         {
             healthBar.UpdateHealthBar(health, maxHealth);
         }
-
-        // Debug log to verify damage
-        Debug.Log($"Boss took {damageAmount} damage. Current health: {health}/{maxHealth}");
     }
 
     protected override void EnterSecondPhase()
@@ -50,7 +44,7 @@ public class BigBossEnemy : BossEnemy
         
         // Optionally heal a bit when entering second phase
         health = Mathf.Min(health + (maxHealth * 0.1f), maxHealth);
-        healthBar?.UpdateHealthBar(health, maxHealth);
+        healthBar.UpdateHealthBar(health, maxHealth);
         
         if (bossAttack)
         {
@@ -62,8 +56,6 @@ public class BigBossEnemy : BossEnemy
     protected override void Update()
     {
         if (isDead) return;
-
-        // Check if it's time to attack
         if (Time.time >= nextAttackTime)
         {
             Fire();
@@ -82,10 +74,8 @@ public class BigBossEnemy : BossEnemy
     protected override void Die()
     {
         if (isDead) return;
-        
         if (bossCollider) bossCollider.enabled = false;
         if (bossAttack) Destroy(bossAttack);
-        
         base.Die();
     }
 }

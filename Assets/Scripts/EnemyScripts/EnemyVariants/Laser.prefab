@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba69df9180ed6404692d9dba9d21523d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 10
   spriteRenderer: {fileID: 0}
   dissolve: {fileID: 8930314727515589370}
 --- !u!114 &8930314727515589370
