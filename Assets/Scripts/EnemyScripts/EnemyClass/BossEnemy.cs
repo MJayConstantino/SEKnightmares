@@ -5,17 +5,50 @@ public abstract class BossEnemy : RangedEnemy
     [Header("Boss Specific")]
     [SerializeField] protected AudioSource phaseTransitionSound;
     [SerializeField] protected Animator animator;
-    [SerializeField] protected Canvas healthBarCanvas;
     
     protected bool isSecondPhase = false;
     protected bool isDead = false;
 
+    [Header("Boss UI")]
+    [SerializeField] protected GameObject bossHealthBarPrefab;
+    [SerializeField] protected string uiCanvasTag = "MainUICanvas"; // Add this to identify the correct canvas
+    [SerializeField] protected string bossName = "Boss";
+    protected BossHealthBar bossHealthBar;
+
     protected override void Start()
     {
         base.Start();
-        if (healthBarCanvas)
+        
+        if (healthBar)
         {
-            healthBarCanvas.worldCamera = Camera.main;
+            healthBar.gameObject.SetActive(false);
+        }
+
+        // Find the correct canvas using tag
+        Canvas uiCanvas = GameObject.FindGameObjectWithTag(uiCanvasTag).GetComponent<Canvas>();
+        
+        if (bossHealthBarPrefab)
+        {
+            if (uiCanvas == null)
+            {
+                Debug.LogError($"No Canvas found with tag '{uiCanvasTag}' for {gameObject.name}");
+                return;
+            }
+
+            GameObject healthBarObj = Instantiate(bossHealthBarPrefab, uiCanvas.transform);
+            bossHealthBar = healthBarObj.GetComponent<BossHealthBar>();
+            if (bossHealthBar)
+            {
+                bossHealthBar.Initialize(maxHealth, bossName);
+            }
+            else
+            {
+                Debug.LogError("BossHealthBar component not found on instantiated prefab");
+            }
+        }
+        else
+        {
+            Debug.LogError("Boss health bar prefab not assigned to " + gameObject.name);
         }
     }
 
@@ -24,6 +57,11 @@ public abstract class BossEnemy : RangedEnemy
         if (isDead) return;
 
         base.TakeDamage(damageAmount);
+
+        if (bossHealthBar)
+        {
+            bossHealthBar.UpdateHealth(health);
+        }
 
         if (!isSecondPhase && health <= maxHealth / 2)
         {
@@ -36,6 +74,7 @@ public abstract class BossEnemy : RangedEnemy
         isSecondPhase = true;
         if (phaseTransitionSound) phaseTransitionSound.Play();
         if (animator) animator.SetBool("2ndPhase", true);
+        if (bossHealthBar) bossHealthBar.OnPhaseTransition();
     }
 
     protected override void Die()
@@ -44,7 +83,13 @@ public abstract class BossEnemy : RangedEnemy
         
         isDead = true;
         StopAllCoroutines();
-        if (healthBarCanvas) healthBarCanvas.gameObject.SetActive(false);
+        
+        // Destroy the boss health bar
+        if (bossHealthBar)
+        {
+            Destroy(bossHealthBar.gameObject);
+        }
+        
         base.Die();
     }
 }

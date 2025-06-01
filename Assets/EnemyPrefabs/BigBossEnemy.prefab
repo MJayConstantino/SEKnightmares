@@ -2572,7 +2572,9 @@ MonoBehaviour:
   attackSound: {fileID: 846323807169817867}
   phaseTransitionSound: {fileID: 4882581939815784239}
   animator: {fileID: 6261735324344195136}
-  healthBarCanvas: {fileID: 9068639224388452894}
+  bossHealthBarPrefab: {fileID: 1792741920335167162, guid: 4f0477c410371984ebd46d2acde1f289, type: 3}
+  uiCanvas: {fileID: 9068639224388452894}
+  bossName: FINAL DEFENSE
   bossAttack: {fileID: 4612937191194168043}
   bossCollider: {fileID: 4929404679114944160}
   attackInterval: 2

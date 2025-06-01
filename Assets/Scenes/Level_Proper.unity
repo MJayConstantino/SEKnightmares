@@ -52484,7 +52484,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1277350902869242949, guid: 67404b14dc0bc4a4893cb1abbb1f3e74, type: 3}
   firePoint: {fileID: 1749192762}
   baseFireForce: 10
-  baseDamage: 1
+  baseDamage: 100
   baseFireRate: 1
   shootSound: {fileID: 1460220623}
   bulletLifetime: 2
@@ -117473,24 +117473,23 @@ MonoBehaviour:
   - waveName: Midterms
     noOfEnemies: 15
     typeOfEnemies:
-    - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
     - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
     - {fileID: 2130760986725788217, guid: cff6b37a04aa257499f3fb24e930ef11, type: 3}
+    - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
     spawnInterval: 2
   - waveName: Hell Week
     noOfEnemies: 20
     typeOfEnemies:
     - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
     - {fileID: 4590400654008043599, guid: a29de964efcd637469200344e3436629, type: 3}
-    spawnInterval: 3
+    spawnInterval: 2
   - waveName: Finals
     noOfEnemies: 30
     typeOfEnemies:
-    - {fileID: 1587515984124465989, guid: 7661f98eaf742bb47adec309e3a8361b, type: 3}
     - {fileID: 4572305456720720529, guid: 950bcbc5f156c034583d83b936f63dd2, type: 3}
     - {fileID: 2130760986725788217, guid: cff6b37a04aa257499f3fb24e930ef11, type: 3}
     - {fileID: 4590400654008043599, guid: a29de964efcd637469200344e3436629, type: 3}
-    spawnInterval: 2.5
+    spawnInterval: 2
   - waveName: Final Defense
     noOfEnemies: 1
     typeOfEnemies:
@@ -141697,7 +141696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fff0ec71e35b7a40964bf19d25ecd9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 10000
   maxExperience: 5
   damageFlashDuration: 0.2
   deathDelay: 1
@@ -142972,8 +142971,8 @@ GameObject:
   - component: {fileID: 1566736569}
   - component: {fileID: 1566736573}
   m_Layer: 5
-  m_Name: Canvas
-  m_TagString: Untagged
+  m_Name: UICanvas
+  m_TagString: MainUICanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
