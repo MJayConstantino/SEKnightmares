@@ -108,8 +108,18 @@ public class PlayerHealth : MonoBehaviour
 
     private IEnumerator PlayerDeath()
     {
+        if (deathSound) deathSound.Play();
         yield return new WaitForSeconds(deathDelay);
-        SceneManager.LoadScene("GameOver");
+
+        StartCoroutine(LoadSceneWithTransition("GameOver"));
+
+    }
+
+    IEnumerator LoadSceneWithTransition(string sceneName)
+    {
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(sceneName);
     }
 
     private void HandleExperienceChange(int experienceGained)
