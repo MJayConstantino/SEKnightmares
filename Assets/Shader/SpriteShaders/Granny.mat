@@ -45,7 +45,7 @@ Material:
     - _DissolveScale: 75
     - _OutlineThickness: 0.1
     - _SpiralStrength: 2
-    - _VerticalDissolve: 1.0417398
+    - _VerticalDissolve: 1.0906285
     m_Colors:
     - _OutlineColor: {r: 0.024532318, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []

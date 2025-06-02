@@ -18,7 +18,7 @@ namespace RewindSystem
             Vector2 currentPos = transform.position;
             for (int i = 0; i < bufferSize; i++)
             {
-                buffer[i] = new PlayerStateSnapshot(currentPos, 100, Time.time);
+                buffer[i] = new PlayerStateSnapshot(currentPos, 10, Time.time);
             }
         }
 
