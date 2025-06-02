@@ -1,57 +1,63 @@
 using UnityEngine;
+using System.Collections;
 
 public class WeaponManager : MonoBehaviour
 {
-    public static WeaponManager Instance { get; private set; }
-    [SerializeField] private BaseWeapon[] weapons;
-    
-    private void Awake()
-    {
-        if (Instance == null)
+    private static WeaponManager instance;
+    public static WeaponManager Instance 
+    { 
+        get
         {
-            Instance = this;
-            if (transform.parent != null)
+            if (instance == null)
             {
-                transform.SetParent(null);
+                instance = FindObjectOfType<WeaponManager>();
             }
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
+            return instance;
         }
     }
+
+    [Header("Debug")]
+    [SerializeField] private bool showDebug = true;
+
+    private WeaponCalculator calculator;
 
     private void Start()
     {
-        ValidateWeapons();
+        StartCoroutine(FindCalculatorWeapon());
     }
 
-    private void ValidateWeapons()
+    private IEnumerator FindCalculatorWeapon()
     {
-        if (weapons == null || weapons.Length == 0)
+        yield return null; // Wait one frame for initialization
+
+        // Find WeaponParentRanged in siblings
+        WeaponParentRanged weaponParent = transform.parent.GetComponentInChildren<WeaponParentRanged>();
+        if (weaponParent != null)
         {
-            Debug.LogWarning("No weapons assigned to WeaponManager");
-            weapons = GetComponentsInChildren<BaseWeapon>();
+            calculator = weaponParent.GetComponentInChildren<WeaponCalculator>();
+            if (calculator != null && showDebug)
+            {
+                Debug.Log($"Found Calculator weapon, starting level: {calculator.WeaponLevel}");
+            }
+        }
+        else
+        {
+            Debug.LogError("WeaponParentRanged not found in siblings");
         }
     }
 
     public void HandlePlayerLevelUp()
     {
-        foreach (BaseWeapon weapon in weapons)
+        if (calculator != null)
         {
-            if (weapon != null)
+            calculator.LevelUp();
+            
+            if (showDebug)
             {
-                weapon.LevelUp();
+                Debug.Log($"Weapon leveled up to {calculator.WeaponLevel}, " +
+                         $"Damage: {calculator.CurrentDamage:F1}, " +
+                         $"Fire Rate: {calculator.CurrentFireRate:F1}");
             }
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (Instance == this)
-        {
-            Instance = null;
         }
     }
 }

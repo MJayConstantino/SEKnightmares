@@ -358,7 +358,7 @@ MonoBehaviour:
   maxHealth: 10
   moveSpeed: 4
   experienceValue: 1
-  damageAmount: 5
+  damageAmount: 3
   spawnSound: {fileID: 7220997750688311287}
   hurtSound: {fileID: 7220997750688311287}
   deathSound: {fileID: 7220997750688311287}

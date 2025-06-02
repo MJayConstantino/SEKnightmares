@@ -11,6 +11,11 @@ public abstract class BaseWeapon : MonoBehaviour
     [SerializeField] protected AudioSource shootSound;
     [SerializeField] protected float bulletLifetime = 2f;
 
+    public int WeaponLevel => weaponLevel;
+    public float CurrentDamage => currentDamage;
+    public float CurrentFireRate => currentFireRate;
+    public float CurrentFireForce => currentFireForce;
+
     protected int weaponLevel = 1;
     protected float currentDamage;
     protected float currentFireRate;
@@ -59,6 +64,7 @@ public abstract class BaseWeapon : MonoBehaviour
         if (bullet.TryGetComponent<Bullet>(out Bullet bulletComponent))
         {
             bulletComponent.Initialize(currentDamage);
+            Debug.Log($"Bullet fired - Damage: {currentDamage:F1}");
         }
         
         if (bullet.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
