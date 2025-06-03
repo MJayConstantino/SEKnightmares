@@ -9,6 +9,12 @@ namespace RewindSystem
         private int bufferSize;
         private int currentIndex = 0;
 
+        [Header("Debug")]
+        [SerializeField] private bool showDebug = true;
+        [SerializeField] private bool showHealthDebug = true;
+        private float debugUpdateInterval = 0.1f;
+        private float lastDebugTime;
+
         public void Initialize(float maxRewindTime, float recordFrequency)
         {
             bufferSize = Mathf.CeilToInt(maxRewindTime / recordFrequency) + 1;
@@ -27,7 +33,42 @@ namespace RewindSystem
             // (ENQUEUE) - Adds new state to buffer, overwrites oldest if full
             currentIndex = (currentIndex + 1) % bufferSize;
             buffer[currentIndex] = new PlayerStateSnapshot(position, health, Time.time);
-            Debug.Log($"Recorded snapshot at index {currentIndex}: Pos={position}, Health={health}, Time={Time.time}");
+            if (showDebug && Time.time >= lastDebugTime + debugUpdateInterval)
+            {
+                DebugBufferHealth();
+                lastDebugTime = Time.time;
+            };
+        }
+
+         private void DebugBufferHealth()
+        {
+            if (!showHealthDebug) return;
+
+            string healthLog = "Health Buffer State:\n";
+            healthLog += "Current Index: " + currentIndex + "\n";
+            healthLog += "Buffer Size: " + bufferSize + "\n";
+            healthLog += "Health Values (Newest to Oldest):\n";
+
+            int count = 0;
+            int index = currentIndex;
+            
+            while (count < bufferSize)
+            {
+                if (buffer[index] != null)
+                {
+                    float timeDiff = Time.time - buffer[index].TimeStamp;
+                    healthLog += $"[{index}] Health: {buffer[index].Health} (Time: {timeDiff:F1}s ago)\n";
+                }
+                else
+                {
+                    healthLog += $"[{index}] Empty\n";
+                }
+                
+                index = (index - 1 + bufferSize) % bufferSize;
+                count++;
+            }
+
+            Debug.Log(healthLog);
         }
 
         public PlayerStateSnapshot GetSnapshotAtTime(float targetTime)
@@ -55,16 +96,22 @@ namespace RewindSystem
             // (PEEK BACK) - Gets oldest relevant snapshot without removing it
             float targetTime = Time.time - maxRewindTime;
             var snapshot = GetSnapshotAtTime(targetTime);
-            Debug.Log($"Rewinding to: Pos={snapshot.Position}, Health={snapshot.Health}, Time={snapshot.TimeStamp}");
+            if (showHealthDebug)
+            {
+                Debug.Log($"Rewind Health Change: Current -> Past");
+                Debug.Log($"Time: {Time.time:F1} -> {snapshot.TimeStamp:F1}");
+                Debug.Log($"Health: {buffer[currentIndex].Health} -> {snapshot.Health}");
+            };
             return snapshot;
         }
 
         public List<PlayerStateSnapshot> GetTrailSnapshots(int numPoints, float maxRewindTime, Vector2 currentPosition, int currentHealth)
         {
-            List<PlayerStateSnapshot> snapshots = new List<PlayerStateSnapshot>();
-
-            // (PEEK FRONT) - Gets most recent state
-            snapshots.Add(new PlayerStateSnapshot(currentPosition, currentHealth, Time.time));
+            List<PlayerStateSnapshot> snapshots = new List<PlayerStateSnapshot>
+            {
+                // (PEEK FRONT) - Gets most recent state
+                new PlayerStateSnapshot(currentPosition, currentHealth, Time.time)
+            };
 
             // Gets states between front and back for trail visualization
             float timeStep = maxRewindTime / (numPoints - 1);
