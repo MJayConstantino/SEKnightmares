@@ -10,7 +10,6 @@ A Unity-based 2D action game featuring a unique time rewind mechanic that allows
 - [🎯 Game Mechanics](#-game-mechanics)
 - [🔧 Technical Implementation](#-technical-implementation)
 - [⚙️ Configuration](#️-configuration)
-- [🐛 Troubleshooting](#-troubleshooting)
 
 ## 🚀 Core Features
 
