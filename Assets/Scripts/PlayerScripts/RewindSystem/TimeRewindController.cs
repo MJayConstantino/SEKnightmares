@@ -68,11 +68,8 @@ public class TimeRewindController : MonoBehaviour
         timePreview.Initialize(spriteRenderer, playerAnimator, circularBuffer);
 
         // Add and initialize TimeTrail if enabled
-        if (showTrail)
-        {
-            timeTrail = gameObject.AddComponent<TimeTrail>();
-            timeTrail.Initialize(spriteRenderer, circularBuffer);
-        }
+        timeTrail = gameObject.AddComponent<TimeTrail>();
+        timeTrail.Initialize(spriteRenderer, circularBuffer);
 
         // Add and initialize TimeGhost
         timeGhost = gameObject.AddComponent<TimeGhost>();
@@ -173,10 +170,13 @@ public class TimeRewindController : MonoBehaviour
 
     private void RewindTime()
     {
-        // Get rewind snapshot and apply it
         PlayerStateSnapshot rewindSnapshot = circularBuffer.GetRewindSnapshot(maxRewindTime);
         if (rewindSnapshot != null)
         {
+            Debug.DrawLine(transform.position, rewindSnapshot.Position, Color.yellow, 1f);
+            Debug.Log($"Rewinding from: Pos={transform.position}, Health={playerHealth.CurrentHealth}");
+            Debug.Log($"Rewinding to: Pos={rewindSnapshot.Position}, Health={rewindSnapshot.Health}");
+            
             transform.position = rewindSnapshot.Position;
             playerHealth.TakeDamage(playerHealth.CurrentHealth - rewindSnapshot.Health);
         }
